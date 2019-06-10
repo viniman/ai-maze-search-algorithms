@@ -3,3 +3,10 @@
 //
 
 #include "Utils.h"
+
+using namespace std;
+
+void Utils::instanceReader(const string &instancePathName)
+{
+
+}
