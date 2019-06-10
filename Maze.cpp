@@ -12,6 +12,7 @@
 
 Maze::Maze(string path)
 {
+
     ofstream outFile;
     ifstream inFile;
     string inFileName;

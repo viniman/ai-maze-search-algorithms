@@ -2,6 +2,7 @@
 // Created by viniman on 10/06/19.
 //
 
+#include <iostream>
 #include "Backtracking.h"
 
 vector<char> operations;
@@ -32,17 +33,17 @@ char nextOperation(Maze& maze)
     }
     else if(searchPointer->directionVisited == 'R')
     {
-        if(searchPointer->right)
+        if(searchPointer->botton)
             return 'B';
     }
     else if(searchPointer->directionVisited == 'B')
     {
-        if(searchPointer->right)
+        if(searchPointer->left)
             return 'L';
     }
     else if(searchPointer->directionVisited == 'L')
     {
-        if(searchPointer->right)
+        if(searchPointer->top)
             return 'T';
     }
     return 'N';
@@ -70,10 +71,17 @@ void Backtracking::backtrackingSearchAlgorithm(Maze& maze)
 
     while (!(failure || success))
     {
-        char nextOp = nextOperation(maze);
+        char nextOp = nextOperation(maze); // proxima operacao a tomar
         if(nextOp != 'N')
         {
+            //if(searchPointer->alreadyVisited)
+                //nextOp = searchPointer->directionVisited;
+            searchPointer->directionVisited = nextOp;
             searchPointer = searchPointer->roomDirectionReturn(nextOp);
+            searchPointer->visitedBy = nextOp;
+            //searchPointer->directionVisited = nextOp;
+            searchPointer->alreadyVisited = true;
+            currentState = searchPointer->id;
             if(searchPointer->id == maze.destination)
                 success = true;
         }
@@ -83,10 +91,14 @@ void Backtracking::backtrackingSearchAlgorithm(Maze& maze)
                 failure = true;
             else
             {
-                currentState = oppositeWay(searchPointer->directionVisited);//funcao para pegar o pai
-                searchPointer = maze.chambers[currentState];
+                nextOp = oppositeWay(searchPointer->visitedBy);//funcao para pegar o pai
+                searchPointer = searchPointer->roomDirectionReturn(nextOp);
+                currentState = searchPointer->id;
             }
         }
     }
-
+    if(failure)
+        cout << "FALHA" << endl;
+    if(success)
+        cout << "SUCESSO" << endl;
 }
