@@ -3,10 +3,11 @@
 //
 
 #include "Utils.h"
+#include "Maze.h"
 
 using namespace std;
 
-void Utils::instanceReader(const string &instancePathName)
+Maze Utils::instanceReader(const string &instancePathName)
 {
 
 }

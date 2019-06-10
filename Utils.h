@@ -6,11 +6,12 @@
 #define AI_MAZE_SEARCH_ALGORITHMS_UTILS_H
 
 #include <string>
+#include "Maze.h"
 
 class Utils
 {
 public:
-    static void instanceReader(const std::string& instancePathName);
+    static Maze instanceReader(const std::string &instancePathName);
 };
 
 
