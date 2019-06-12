@@ -75,7 +75,7 @@ void Backtracking::backtrackingSearchAlgorithm(Maze& maze)
     bool failure, success;
     failure = success = false;
 
-    searchPointer = maze.chambers[maze.source];
+    searchPointer = maze.rooms[maze.source];
 
     while (!(failure || success))
     {

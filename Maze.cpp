@@ -47,13 +47,13 @@ Maze::Maze(string path)
 
         string temp;
 
-        stream >> this->mazeLines >> this->mazeColumns >> this->rooms >> this->source >> this->destination;
+        stream >> this->mazeLines >> this->mazeColumns >> this->numRooms >> this->source >> this->destination;
 
-        chambers = vector<Node*>(rooms, nullptr);
+        rooms = vector<Node*>(numRooms, nullptr);
 
-        for (int i = 0; i < chambers.size(); ++i)
+        for (int i = 0; i < rooms.size(); ++i)
         {
-            chambers[i] = new Node(i,3); // calcular valor heuristico aqui e passar no lugar de 3
+            rooms[i] = new Node(i,3); // calcular valor heuristico aqui e passar no lugar de 3
         }
 
         //for (auto c : chambers)
@@ -70,35 +70,42 @@ Maze::Maze(string path)
             cout << endl << p << endl;
             cout << "asuhaushudahs" << endl;
             //cout << endl << room1 << room2 << direction << "NULL" << endl;
-            if (!chambers[room1])
+            if (!rooms[room1])
             {
                 //chambers[room1]->id = room1;
                 cout << endl << room1 << room2 << direction << "NULL" << endl;
             }
-            if(direction == 'R')
+            switch (operacao(&room1,&room2))
             {
-                chambers[room1]->right = chambers[room2];
-                chambers[room2]->left = chambers[room1];
-            }
-            else if(direction == 'L')
-            {
-                chambers[room1]->left = chambers[room2];
-                chambers[room2]->right = chambers[room1];
-            }
-            else if(direction == 'B')
-            {
-                chambers[room1]->botton = chambers[room2];
-                chambers[room2]->top = chambers[room1];
-            }
-            else if(direction == 'T')
-            {
-                chambers[room1]->top = chambers[room2];
-                chambers[room2]->botton = chambers[room1];
-            }
 
+                case 'R':
+                {
+                    rooms[room1]->right = rooms[room2];
+                    rooms[room2]->left = rooms[room1];
+                    break;
+                }
+                case 'L':
+                {
+                    rooms[room1]->left = rooms[room2];
+                    rooms[room2]->right = rooms[room1];
+                    break;
+                }
+                case 'B':
+                {
+                    rooms[room1]->botton = rooms[room2];
+                    rooms[room2]->top = rooms[room1];
+                    break;
+                }
+                case 'T':
+                {
+                    rooms[room1]->top = rooms[room2];
+                    rooms[room2]->botton = rooms[room1];
+                    break;
+                }
+            }
         }
         cout << "artimanha nananidinanda! Titibum!" << endl;
-        for(const auto& c : chambers)
+        for(const auto& c : rooms)
         {
             cout << c->id << " -> ";
             if(c->right) cout << c->right->id << "(R) ";
@@ -124,5 +131,59 @@ Maze::Maze(string path)
 char Maze::nextOperation()
 {
     //if(directionVisited == 'N')
+
+}
+
+void Maze::calculaXY()
+{
+    // |x2 - x1| + |y2 - y1|
+    int i, j;
+
+    auto it = rooms.begin();
+
+    for(i = 0; i < mazeLines; ++i)
+    {
+
+        for(j = 0; j < mazeColumns; ++j)
+        {
+            (*it)->x = i;
+            (*it)->x = j;
+
+            ++it;
+
+        }
+    }
+}
+
+char operacao(Node *no1, Node *no2)
+{
+
+    int x1 = no1->x;
+    int y1 = no1->y;
+
+    int x2 = no2->x;
+    int y2 = no2->y;
+
+    if((x1 == x2) && (y1+1 == y2)) //Verifica se no2 está a direita de no1
+    {
+        return 'R';
+    }
+    else if((x1 == x2) && (y2+1 == y1)) //Verifica se no2 está a Esquerda de no1
+    {
+        return 'L';
+
+    }
+    else if((y1 == y2) && (x1 - 1 == x2)) //Verifica se no2 está a acima de no1
+    {
+        return 'T';
+    }
+    else if((y1 == y2) && (x1 + 1 == x2)) //Verifica se no2 está a Embaixo de no1
+    {
+        return 'B';
+    }
+    else //Erro
+    {
+        exit(-1);
+    }
 
 }

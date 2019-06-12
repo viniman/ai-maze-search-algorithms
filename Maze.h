@@ -17,13 +17,17 @@ class Maze
 public:
     unsigned int mazeLines;
     unsigned int mazeColumns;
-    unsigned int rooms;
+    unsigned int numRooms;
     unsigned int source;
     unsigned int destination;
     vector<int> heuristicFunc;
 
-    vector<Node*> chambers;
+    vector<Node*> rooms;
     char nextOperation();
+
+    void calculaXY();
+
+    char operacao(Node *no1, Node *no2);
 
     explicit Maze(string path);
 };

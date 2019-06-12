@@ -12,6 +12,9 @@ public:
     unsigned int heuristicValue;
     int id;
 
+    int x;
+    int y;
+
     Node* right = nullptr;
     Node* left = nullptr;
     Node* botton = nullptr;
