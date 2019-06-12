@@ -18,7 +18,7 @@ public:
     Node* top = nullptr;
 
     char directionVisited = 'N';
-    char visitedBy;
+    char visitedBy = 'N';
     bool alreadyVisited = false;
     Node* roomDirectionReturn(char &op);
 
