@@ -20,6 +20,7 @@ public:
     unsigned int numRooms;
     unsigned int source;
     unsigned int destination;
+    char operacao(Node *no1, Node *no2);
     vector<int> heuristicFunc;
 
     vector<Node*> rooms;
@@ -27,7 +28,6 @@ public:
 
     void calculaXY();
 
-    char operacao(Node *no1, Node *no2);
 
     explicit Maze(string path);
 };

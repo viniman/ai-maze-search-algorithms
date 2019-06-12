@@ -56,6 +56,8 @@ Maze::Maze(string path)
             rooms[i] = new Node(i,3); // calcular valor heuristico aqui e passar no lugar de 3
         }
 
+        calculaXY();
+
         //for (auto c : chambers)
         //cout << c->id << endl;
 
@@ -75,7 +77,7 @@ Maze::Maze(string path)
                 //chambers[room1]->id = room1;
                 cout << endl << room1 << room2 << direction << "NULL" << endl;
             }
-            switch (operacao(&room1,&room2))
+            switch (operacao(rooms[room1],rooms[room2]))
             {
 
                 case 'R':
@@ -155,7 +157,7 @@ void Maze::calculaXY()
     }
 }
 
-char operacao(Node *no1, Node *no2)
+char Maze::operacao(Node *no1, Node *no2)
 {
 
     int x1 = no1->x;
