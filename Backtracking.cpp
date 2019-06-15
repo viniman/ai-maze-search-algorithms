@@ -20,6 +20,8 @@ char oppositeWay(char c)
             return 'T';
         case 'T':
             return 'B';
+        default:
+            return 'N';
     }
 }
 
@@ -75,7 +77,7 @@ void Backtracking::backtrackingSearchAlgorithm(Maze& maze)
     bool failure, success;
     failure = success = false;
 
-    searchPointer = maze.rooms[maze.source];
+    searchPointer = maze.origin;
 
     while (!(failure || success))
     {
@@ -87,12 +89,12 @@ void Backtracking::backtrackingSearchAlgorithm(Maze& maze)
             searchPointer = searchPointer->roomDirectionReturn(nextOp);
             searchPointer->visitedBy = nextOp;
             searchPointer->alreadyVisited = true;
-            if(searchPointer->id == maze.destination)
+            if(searchPointer->id == maze.destination->id)
                 success = true;
         }
         else
         {
-            if(searchPointer->id == maze.source)
+            if(searchPointer->id == maze.origin->id)
                 failure = true;
             else
             {

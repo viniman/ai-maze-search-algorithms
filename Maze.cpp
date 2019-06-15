@@ -8,6 +8,7 @@
 #include <iostream>
 #include <sstream>
 #include "Maze.h"
+#include <cmath>
 
 
 Maze::Maze(string path)
@@ -18,6 +19,7 @@ Maze::Maze(string path)
     string inFileName;
     string outFileName;
 
+    int originId, destinationId;
 
     inFile.open(path);
 
@@ -45,9 +47,7 @@ Maze::Maze(string path)
 
         stream << p;
 
-        string temp;
-
-        stream >> this->mazeLines >> this->mazeColumns >> this->numRooms >> this->source >> this->destination;
+        stream >> this->mazeLines >> this->mazeColumns >> this->numRooms >> originId >> destinationId;
 
         rooms = vector<Node*>(numRooms, nullptr);
 
@@ -56,10 +56,14 @@ Maze::Maze(string path)
             rooms[i] = new Node(i,3); // calcular valor heuristico aqui e passar no lugar de 3
         }
 
+
+        this->origin = rooms[originId];
+        this->destination = rooms[destinationId];
+
         calculaXY();
 
-        //for (auto c : chambers)
-        //cout << c->id << endl;
+        for(auto& it : rooms)
+            it->heuristicValue = manhattanDistance(it);
 
         int room1, room2;
         char direction;
@@ -130,32 +134,43 @@ Maze::Maze(string path)
 
 
 
-char Maze::nextOperation()
-{
-    //if(directionVisited == 'N')
-
-}
 
 void Maze::calculaXY()
 {
-    // |x2 - x1| + |y2 - y1|
+/*
     int i, j;
 
     auto it = rooms.begin();
-
+    */
+    for(auto& itRoom: rooms)
+    {
+        itRoom->x = itRoom->id / mazeColumns;
+        itRoom->y = itRoom->id % mazeColumns;
+    }
+/*
     for(i = 0; i < mazeLines; ++i)
     {
 
         for(j = 0; j < mazeColumns; ++j)
         {
             (*it)->x = i;
-            (*it)->x = j;
+            (*it)->y = j;
 
+            if((i * mazeColumns + j + 1) >= numRooms)
+                return;
             ++it;
 
         }
-    }
+    }*/
 }
+
+// |x2 - x1| + |y2 - y1|
+int Maze::manhattanDistance(Node *no1)
+{
+    return abs(destination->x - no1->x) + abs(destination->y - no1->y);
+}
+
+
 
 char Maze::operacao(Node *no1, Node *no2)
 {
@@ -187,5 +202,5 @@ char Maze::operacao(Node *no1, Node *no2)
     {
         exit(-1);
     }
-
 }
+

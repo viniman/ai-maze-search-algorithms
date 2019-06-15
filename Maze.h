@@ -18,16 +18,15 @@ public:
     unsigned int mazeLines;
     unsigned int mazeColumns;
     unsigned int numRooms;
-    unsigned int source;
-    unsigned int destination;
+    Node* origin;
+    Node* destination;
     char operacao(Node *no1, Node *no2);
-    vector<int> heuristicFunc;
+    vector<int> heuristicFunc; //usar unordered_map ou map?
 
     vector<Node*> rooms;
-    char nextOperation();
 
     void calculaXY();
-
+    int manhattanDistance(Node *no1);
 
     explicit Maze(string path);
 };
