@@ -46,6 +46,16 @@ Node *Node::getTop() const
     return top;
 }
 
+Node *Node::getFather() const
+{
+    return father;
+}
+
+void Node::setFather(Node *father)
+{
+    this->father = father;
+}
+
 void Node::setRight(Node *right)
 {
     Node::right = right;

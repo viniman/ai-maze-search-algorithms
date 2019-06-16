@@ -5,10 +5,16 @@
 #ifndef AI_MAZE_SEARCH_ALGORITHMS_DEPTH_H
 #define AI_MAZE_SEARCH_ALGORITHMS_DEPTH_H
 
+#include <iostream>
+#include "Maze.h"
+#include <stack>
+
+using namespace std;
 
 class Depth
 {
-
+public:
+    static void DepthSearchAlgorithm(Maze& maze);
 };
 
 

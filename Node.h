@@ -20,6 +20,7 @@ private:
     Node* left = nullptr;
     Node* botton = nullptr;
     Node* top = nullptr;
+    Node* father = nullptr;
 public:
     explicit Node(int id);
     Node(int id, unsigned int heuristicValue);
@@ -31,10 +32,12 @@ public:
     Node *getLeft() const;
     Node *getBotton() const;
     Node *getTop() const;
+    Node *getFather() const;
     void setRight(Node *right);
     void setLeft(Node *left);
     void setBotton(Node *botton);
     void setTop(Node *top);
+    void setFather(Node *father);
     Node* roomDirectionReturn(char &op);
     char getDirectionVisited() const;
     char getVisitedBy() const;
