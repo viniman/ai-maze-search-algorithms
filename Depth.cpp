@@ -15,7 +15,7 @@ void Depth::DepthSearchAlgorithm(Maze& maze)
     Node *neighborhood = NULL;
 
     // Continua enqunto a origem não for atingida e a pilha for não fazia.
-    while((!origin->isVisited()) && (stackNode.empty() == false))
+    while((!origin->isVisited()) && (!stackNode.empty()))
     {
 
         corrente = stackNode.top(); //Atualiza o nó corrente
