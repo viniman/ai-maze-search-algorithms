@@ -8,25 +8,44 @@
 
 class Node
 {
-public:
+private:
+    char directionVisited = 'N';
+    char visitedBy = 'N';
+    bool alreadyVisited = false;
     unsigned int heuristicValue;
     int id;
-
     int x;
     int y;
-
     Node* right = nullptr;
     Node* left = nullptr;
     Node* botton = nullptr;
     Node* top = nullptr;
-
-    char directionVisited = 'N';
-    char visitedBy = 'N';
-    bool alreadyVisited = false;
+public:
+    explicit Node(int id);
+    Node(int id, unsigned int heuristicValue);
+    void setHeuristicValue(unsigned int heuristicValue);
+    void setId(int id);
+    void setX(int x);
+    void setY(int y);
+    Node *getRight() const;
+    Node *getLeft() const;
+    Node *getBotton() const;
+    Node *getTop() const;
+    void setRight(Node *right);
+    void setLeft(Node *left);
+    void setBotton(Node *botton);
+    void setTop(Node *top);
     Node* roomDirectionReturn(char &op);
-
-    Node();
-    Node(int id, unsigned int peso);
+    char getDirectionVisited() const;
+    char getVisitedBy() const;
+    bool isVisited() const;
+    void setVisited();
+    void setDirectionVisited(char directionVisited);
+    void setVisitedBy(char visitedBy);
+    unsigned int getHeuristicValue() const;
+    int getId() const;
+    int getX() const;
+    int getY() const;
 
 };
 

@@ -14,21 +14,26 @@ using namespace std;
 
 class Maze
 {
-public:
+private:
     unsigned int mazeLines;
     unsigned int mazeColumns;
     unsigned int numRooms;
     Node* origin;
     Node* destination;
-    char operacao(Node *no1, Node *no2);
-    vector<int> heuristicFunc; //usar unordered_map ou map?
-
     vector<Node*> rooms;
 
+public:
+    explicit Maze(string path);
+    Node *getOrigin() const;
+    Node *getDestination() const;
+    unsigned int getMazeLines() const;
+    unsigned int getMazeColumns() const;
+    unsigned int getNumRooms() const;
+    const Node* getRoom(int id) const;
+    char operacao(Node *no1, Node *no2);
     void calculaXY();
     int manhattanDistance(Node *no1);
 
-    explicit Maze(string path);
 };
 
 

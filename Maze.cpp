@@ -53,7 +53,7 @@ Maze::Maze(string path)
 
         for (int i = 0; i < rooms.size(); ++i)
         {
-            rooms[i] = new Node(i,3); // calcular valor heuristico aqui e passar no lugar de 3
+            rooms[i] = new Node(i); // calcular valor heuristico aqui e passar no lugar de 3
         }
 
 
@@ -63,7 +63,7 @@ Maze::Maze(string path)
         calculaXY();
 
         for(auto& it : rooms)
-            it->heuristicValue = manhattanDistance(it);
+            it->setHeuristicValue(manhattanDistance(it));
 
         int room1, room2;
         char direction;
@@ -86,26 +86,26 @@ Maze::Maze(string path)
 
                 case 'R':
                 {
-                    rooms[room1]->right = rooms[room2];
-                    rooms[room2]->left = rooms[room1];
+                    rooms[room1]->setRight(rooms[room2]);
+                    rooms[room2]->setLeft(rooms[room1]);
                     break;
                 }
                 case 'L':
                 {
-                    rooms[room1]->left = rooms[room2];
-                    rooms[room2]->right = rooms[room1];
+                    rooms[room2]->setLeft(rooms[room1]);
+                    rooms[room1]->setRight(rooms[room2]);
                     break;
                 }
                 case 'B':
                 {
-                    rooms[room1]->botton = rooms[room2];
-                    rooms[room2]->top = rooms[room1];
+                    rooms[room1]->setBotton(rooms[room2]);
+                    rooms[room1]->setTop(rooms[room2]);
                     break;
                 }
                 case 'T':
                 {
-                    rooms[room1]->top = rooms[room2];
-                    rooms[room2]->botton = rooms[room1];
+                    rooms[room1]->setTop(rooms[room2]);
+                    rooms[room1]->setBotton(rooms[room2]);
                     break;
                 }
             }
@@ -113,11 +113,11 @@ Maze::Maze(string path)
         cout << "artimanha nananidinanda! Titibum!" << endl;
         for(const auto& c : rooms)
         {
-            cout << c->id << " -> ";
-            if(c->right) cout << c->right->id << "(R) ";
-            if(c->left) cout << c->left->id << "(L) ";
-            if(c->botton) cout << c->botton->id << "(B) ";
-            if(c->top) cout << c->top->id << "(T) ";
+            cout << c->getId() << " -> ";
+            if(c->getRight()) cout << c->getRight()->getId() << "(R) ";
+            if(c->getLeft()) cout << c->getLeft()->getId() << "(L) ";
+            if(c->getBotton()) cout << c->getBotton()->getId() << "(B) ";
+            if(c->getTop()) cout << c->getBotton()->getId() << "(T) ";
             cout << endl;
         }
         cout << "artimanha nananidinanda! Titibum!" << endl;
@@ -144,8 +144,8 @@ void Maze::calculaXY()
     */
     for(auto& itRoom: rooms)
     {
-        itRoom->x = itRoom->id / mazeColumns;
-        itRoom->y = itRoom->id % mazeColumns;
+        itRoom->setX(itRoom->getId()/mazeColumns);
+        itRoom->setY(itRoom->getId()%mazeColumns);
     }
 /*
     for(i = 0; i < mazeLines; ++i)
@@ -167,7 +167,7 @@ void Maze::calculaXY()
 // |x2 - x1| + |y2 - y1|
 int Maze::manhattanDistance(Node *no1)
 {
-    return abs(destination->x - no1->x) + abs(destination->y - no1->y);
+    return abs(destination->getX() - no1->getX()) + abs(destination->getY() - no1->getY());
 }
 
 
@@ -175,11 +175,11 @@ int Maze::manhattanDistance(Node *no1)
 char Maze::operacao(Node *no1, Node *no2)
 {
 
-    int x1 = no1->x;
-    int y1 = no1->y;
+    int x1 = no1->getX();
+    int y1 = no1->getY();
 
-    int x2 = no2->x;
-    int y2 = no2->y;
+    int x2 = no2->getX();
+    int y2 = no2->getY();
 
     if((x1 == x2) && (y1+1 == y2)) //Verifica se no2 está a direita de no1
     {
@@ -202,5 +202,35 @@ char Maze::operacao(Node *no1, Node *no2)
     {
         exit(-1);
     }
+}
+
+unsigned int Maze::getMazeLines() const
+{
+    return mazeLines;
+}
+
+unsigned int Maze::getMazeColumns() const
+{
+    return mazeColumns;
+}
+
+unsigned int Maze::getNumRooms() const
+{
+    return numRooms;
+}
+
+Node *Maze::getOrigin() const
+{
+    return origin;
+}
+
+Node *Maze::getDestination() const
+{
+    return destination;
+}
+
+const Node* Maze::getRoom(int id) const
+{
+    return rooms[id];
 }
 

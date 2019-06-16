@@ -6,7 +6,7 @@
 #include "Backtracking.h"
 
 vector<char> operations;
-Node* searchPointer;
+
 
 char oppositeWay(char c)
 {
@@ -25,39 +25,39 @@ char oppositeWay(char c)
     }
 }
 
-char nextOperation()
+char nextOperation(Node* searchPointer)
 {
-    if(searchPointer->directionVisited == 'N') // nao visitou ninguem, entao testa todos
+    if(searchPointer->getDirectionVisited() == 'N') // nao visitou ninguem, entao testa todos
     {
-        if(searchPointer->right && oppositeWay(searchPointer->visitedBy) != 'R')
+        if(searchPointer->getRight() && oppositeWay(searchPointer->getVisitedBy()) != 'R')
             return 'R';
-        if(searchPointer->botton && oppositeWay(searchPointer->visitedBy) != 'B')
+        if(searchPointer->getBotton()&& oppositeWay(searchPointer->getVisitedBy()) != 'B')
             return 'B';
-        if(searchPointer->left && oppositeWay(searchPointer->visitedBy) != 'L')
+        if(searchPointer->getLeft()&& oppositeWay(searchPointer->getVisitedBy()) != 'L')
             return 'L';
-        if(searchPointer->top && oppositeWay(searchPointer->visitedBy) != 'T')
+        if(searchPointer->getTop() && oppositeWay(searchPointer->getVisitedBy()) != 'T')
             return 'T';
 
     }
-    if(searchPointer->directionVisited == 'R') //ja visitou R, entao visita o que sobrou
+    if(searchPointer->getDirectionVisited()== 'R') //ja visitou R, entao visita o que sobrou
     {
-        if(searchPointer->botton && oppositeWay(searchPointer->visitedBy) != 'B')
+        if(searchPointer->getBotton() && oppositeWay(searchPointer->getVisitedBy()) != 'B')
             return 'B';
-        if(searchPointer->left && oppositeWay(searchPointer->visitedBy) != 'L')
+        if(searchPointer->getLeft() && oppositeWay(searchPointer->getVisitedBy()) != 'L')
             return 'L';
-        if(searchPointer->top && oppositeWay(searchPointer->visitedBy) != 'T')
+        if(searchPointer->getTop()&& oppositeWay(searchPointer->getVisitedBy()) != 'T')
             return 'T';
     }
-    if(searchPointer->directionVisited == 'B')
+    if(searchPointer->getDirectionVisited()== 'B')
     {
-        if(searchPointer->left && oppositeWay(searchPointer->visitedBy) != 'L')
+        if(searchPointer->getLeft()&& oppositeWay(searchPointer->getVisitedBy()) != 'L')
             return 'L';
-        if(searchPointer->top && oppositeWay(searchPointer->visitedBy) != 'T')
+        if(searchPointer->getTop()&& oppositeWay(searchPointer->getVisitedBy()) != 'T')
             return 'T';
     }
-    if(searchPointer->directionVisited == 'L')
+    if(searchPointer->getDirectionVisited()== 'L')
     {
-        if(searchPointer->top && oppositeWay(searchPointer->visitedBy) != 'T')
+        if(searchPointer->getTop()&& oppositeWay(searchPointer->getVisitedBy()) != 'T')
             return 'T';
     }
     return 'N';
@@ -69,36 +69,36 @@ char nextOperation()
 
 void Backtracking::backtrackingSearchAlgorithm(Maze& maze)
 {
-
     operations.push_back('R');
     operations.push_back('L');
     operations.push_back('T');
     operations.push_back('B');
+
     bool failure, success;
     failure = success = false;
 
-    searchPointer = maze.origin;
+    Node* searchPointer = maze.getOrigin();
 
     while (!(failure || success))
     {
-        char nextOp = nextOperation(); // proxima operacao a tomar
-        if(nextOp != 'N' && !searchPointer->roomDirectionReturn(nextOp)->alreadyVisited)
+        char nextOp = nextOperation(searchPointer); // proxima operacao a tomar
+        if(nextOp != 'N' && !searchPointer->roomDirectionReturn(nextOp))
         {
 
-            searchPointer->directionVisited = nextOp;
+            searchPointer->setDirectionVisited(nextOp);
             searchPointer = searchPointer->roomDirectionReturn(nextOp);
-            searchPointer->visitedBy = nextOp;
-            searchPointer->alreadyVisited = true;
-            if(searchPointer->id == maze.destination->id)
+            searchPointer->setVisitedBy(nextOp);
+            searchPointer->setVisited();
+            if(searchPointer->getId() == maze.getDestination()->getId())
                 success = true;
         }
         else
         {
-            if(searchPointer->id == maze.origin->id)
+            if(searchPointer->getId() == maze.getOrigin()->getId())
                 failure = true;
             else
             {
-                nextOp = oppositeWay(searchPointer->visitedBy);//funcao para pegar o pai
+                nextOp = oppositeWay(searchPointer->getVisitedBy());//funcao para pegar o pai
                 searchPointer = searchPointer->roomDirectionReturn(nextOp);
             }
         }
