@@ -6,7 +6,9 @@
 #define AI_MAZE_SEARCH_ALGORITHMS_ORDERED_H
 
 
-class Ordered
+#include "SearchAlgorithm.h"
+
+class Ordered : public SearchAlgorithm
 {
 
 };

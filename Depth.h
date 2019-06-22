@@ -7,11 +7,12 @@
 
 #include <iostream>
 #include "Maze.h"
+#include "SearchAlgorithm.h"
 #include <stack>
 
 using namespace std;
 
-class Depth
+class Depth : public SearchAlgorithm
 {
 public:
     static void DepthSearchAlgorithm(Maze& maze);

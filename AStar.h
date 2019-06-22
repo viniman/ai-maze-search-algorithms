@@ -6,7 +6,9 @@
 #define AI_MAZE_SEARCH_ALGORITHMS_ASTAR_H
 
 
-class AStar
+#include "SearchAlgorithm.h"
+
+class AStar : public SearchAlgorithm
 {
 
 };

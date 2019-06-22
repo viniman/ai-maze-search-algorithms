@@ -5,9 +5,15 @@
 #ifndef AI_MAZE_SEARCH_ALGORITHMS_SEARCHALGORITHM_H
 #define AI_MAZE_SEARCH_ALGORITHMS_SEARCHALGORITHM_H
 
+#include <vector>
+#include "Node.h"
 
-class SearchAlgorithm {
-
+class SearchAlgorithm
+{
+public:
+    static std::vector<char> operations;
+    static char oppositeWay(char c);
+    static char nextOperation(Node* searchPointer);
 };
 
 

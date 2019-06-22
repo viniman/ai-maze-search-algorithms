@@ -6,7 +6,9 @@
 #define AI_MAZE_SEARCH_ALGORITHMS_GREEDY_H
 
 
-class Greedy
+#include "SearchAlgorithm.h"
+
+class Greedy : public SearchAlgorithm
 {
 
 };

@@ -7,8 +7,9 @@
 
 
 #include "Maze.h"
+#include "SearchAlgorithm.h"
 
-class Breadth
+class Breadth : public SearchAlgorithm
 {
 public:
     static void breadthSearchAlgorithm(Maze& maze);

@@ -7,7 +7,9 @@
 
 //https://algorithmsinsight.wordpress.com/graph-theory-2/ida-star-algorithm-in-general/
 
-class IDAStar
+#include "SearchAlgorithm.h"
+
+class IDAStar : public SearchAlgorithm
 {
 
 };
