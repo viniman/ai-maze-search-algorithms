@@ -53,7 +53,7 @@ Maze::Maze(string path)
 
         for (int i = 0; i < rooms.size(); ++i)
         {
-            rooms[i] = new Node(i); // calcular valor heuristico aqui e passar no lugar de 3
+            rooms[i] = new Node(i); // calcular valor heuristico aqui e passar no construtor
         }
 
 
@@ -73,14 +73,7 @@ Maze::Maze(string path)
             stream.clear();
             stream << p;
             stream >> room1 >> room2 >> direction;
-            cout << endl << p << endl;
-            cout << "asuhaushudahs" << endl;
-            //cout << endl << room1 << room2 << direction << "NULL" << endl;
-            if (!rooms[room1])
-            {
-                //chambers[room1]->id = room1;
-                cout << endl << room1 << room2 << direction << "NULL" << endl;
-            }
+
             switch (operacao(rooms[room1],rooms[room2]))
             {
 
@@ -92,37 +85,24 @@ Maze::Maze(string path)
                 }
                 case 'L':
                 {
-                    rooms[room2]->setLeft(rooms[room1]);
-                    rooms[room1]->setRight(rooms[room2]);
+                    rooms[room1]->setLeft(rooms[room2]);
+                    rooms[room2]->setRight(rooms[room1]);
                     break;
                 }
                 case 'B':
                 {
                     rooms[room1]->setBotton(rooms[room2]);
-                    rooms[room1]->setTop(rooms[room2]);
+                    rooms[room2]->setTop(rooms[room1]);
                     break;
                 }
                 case 'T':
                 {
                     rooms[room1]->setTop(rooms[room2]);
-                    rooms[room1]->setBotton(rooms[room2]);
+                    rooms[room2]->setBotton(rooms[room1]);
                     break;
                 }
             }
         }
-        cout << "artimanha nananidinanda! Titibum!" << endl;
-        for(const auto& c : rooms)
-        {
-            cout << c->getId() << " -> ";
-            if(c->getRight()) cout << c->getRight()->getId() << "(R) ";
-            if(c->getLeft()) cout << c->getLeft()->getId() << "(L) ";
-            if(c->getBotton()) cout << c->getBotton()->getId() << "(B) ";
-            if(c->getTop()) cout << c->getBotton()->getId() << "(T) ";
-            cout << endl;
-        }
-        cout << "artimanha nananidinanda! Titibum!" << endl;
-
-
         delete[] buffer;
         return;
     }

@@ -82,7 +82,7 @@ void Backtracking::backtrackingSearchAlgorithm(Maze& maze)
     while (!(failure || success))
     {
         char nextOp = nextOperation(searchPointer); // proxima operacao a tomar
-        if(nextOp != 'N' && !searchPointer->roomDirectionReturn(nextOp))
+        if(nextOp != 'N' && searchPointer->roomDirectionReturn(nextOp))
         {
 
             searchPointer->setDirectionVisited(nextOp);

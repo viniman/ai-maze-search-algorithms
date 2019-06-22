@@ -6,9 +6,12 @@
 #define AI_MAZE_SEARCH_ALGORITHMS_BREADTH_H
 
 
+#include "Maze.h"
+
 class Breadth
 {
-
+public:
+    static void breadthSearchAlgorithm(Maze& maze);
 };
 
 
