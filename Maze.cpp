@@ -47,13 +47,16 @@ Maze::Maze(string path)
 
         stream << p;
 
-        stream >> this->mazeLines >> this->mazeColumns >> this->numRooms >> originId >> destinationId;
+        stream >> this->mazeLines >> this->mazeColumns  >> originId >> destinationId;
+
+        this->numRooms = this->mazeLines * this->mazeColumns;
 
         rooms = vector<Node*>(numRooms, nullptr);
 
         for (int i = 0; i < rooms.size(); ++i)
         {
             rooms[i] = new Node(i); // calcular valor heuristico aqui e passar no construtor
+
         }
 
 
@@ -72,7 +75,7 @@ Maze::Maze(string path)
             p = strtok(nullptr, "\n");
             stream.clear();
             stream << p;
-            stream >> room1 >> room2 >> direction;
+            stream >> room1 >> room2;
 
             switch (operacao(rooms[room1],rooms[room2]))
             {
@@ -109,7 +112,7 @@ Maze::Maze(string path)
     cout << "\tFalha na leitura do arquivo!" << endl;
     cout << "\tO caminho tentado foi: \"" << path << "\"." << endl;
     cout << "\tVERIFIQUE se digitou o nome do diretorio path corretamente." << endl;
-    exit(0);
+    exit(-1);
 }
 
 

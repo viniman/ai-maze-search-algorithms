@@ -9,6 +9,8 @@ Node::Node(int id, unsigned int heuristicValue)
 {
     this->id = id;
     this->heuristicValue = heuristicValue;
+
+
 }
 
 Node* Node::roomDirectionReturn(char &op)

@@ -7,7 +7,7 @@
 #include "Utils.h"
 #include "Backtracking.h"
 #include "Depth.h"
-
+#include "Greedy.h"
 using namespace std;
 
 
@@ -15,9 +15,12 @@ using namespace std;
 
 int main(int argc, char** argv)
 {
-    string instanceFileName = "../instances/instance10_10_3.in";
+    string instanceFileName = "/home/igor/Documentos/ai-maze-search-algorithms/instances/instance10_10_1.in";
     Maze maze(instanceFileName);
-    Backtracking::backtrackingSearchAlgorithm(maze);
-    Depth::DepthSearchAlgorithm(maze);
+    //Backtracking::backtrackingSearchAlgorithm(maze);
+    //Depth::DepthSearchAlgorithm(maze);
+
+    Greedy::greedySearchAlgorithm(maze);
+
     return 0;
 }

@@ -9,13 +9,13 @@ void Depth::DepthSearchAlgorithm(Maze& maze)
 
     stack<Node*> stackNode;             //Pilha de nós
     stackNode.push(maze.getOrigin());   //Coloca a origem no topo da pilha.
-    Node *origin = maze.getOrigin();
+    const Node *const dest = maze.getDestination();
 
     Node *corrente = NULL;
     Node *neighborhood = NULL;
 
     // Continua enqunto a origem não for atingida e a pilha for não fazia.
-    while((!origin->isVisited()) && (!stackNode.empty()))
+    while((!dest->isVisited()) && (!stackNode.empty()))
     {
 
         corrente = stackNode.top(); //Atualiza o nó corrente
@@ -67,8 +67,8 @@ void Depth::DepthSearchAlgorithm(Maze& maze)
 
     }
 
-    if(origin->isVisited())
-        cout<<"SUCESSO\n";
+    if(dest->isVisited())
+        cout<<"SUCESSO DepthSearch\n";
 
     else
         cout<<"FRACASSO\n";

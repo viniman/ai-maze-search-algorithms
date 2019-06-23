@@ -7,10 +7,16 @@
 
 
 #include "SearchAlgorithm.h"
+#include "Maze.h"
+#include "math.h"
+#include <iostream>
+using namespace std;
 
 class Greedy : public SearchAlgorithm
 {
 
+public:
+    static void greedySearchAlgorithm(Maze& maze);
 };
 
 

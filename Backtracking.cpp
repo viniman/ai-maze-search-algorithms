@@ -1,3 +1,4 @@
+/*
 //
 // Created by viniman on 10/06/19.
 //
@@ -48,3 +49,4 @@ void Backtracking::backtrackingSearchAlgorithm(Maze& maze)
     if(success)
         cout << "SUCESSO" << endl;
 }
+*/
