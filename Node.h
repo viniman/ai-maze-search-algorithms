@@ -38,11 +38,12 @@ public:
     void setBotton(Node *botton);
     void setTop(Node *top);
     void setFather(Node *father);
-    Node* roomDirectionReturn(char &op);
+    Node* roomDirectionReturn(const char &op);
     char getDirectionVisited() const;
     char getVisitedBy() const;
     bool isVisited() const;
     void setVisited();
+    void setNonVisited();
     void setDirectionVisited(char directionVisited);
     void setVisitedBy(char visitedBy);
     unsigned int getHeuristicValue() const;

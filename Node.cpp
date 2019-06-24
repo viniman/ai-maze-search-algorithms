@@ -13,7 +13,7 @@ Node::Node(int id, unsigned int heuristicValue)
 
 }
 
-Node* Node::roomDirectionReturn(char &op)
+Node* Node::roomDirectionReturn(const char &op)
 {
     switch (op)
     {
@@ -25,6 +25,8 @@ Node* Node::roomDirectionReturn(char &op)
             return right;
         case 'T':
             return top;
+        default:
+            return nullptr;
     }
 }
 
@@ -71,6 +73,11 @@ char Node::getDirectionVisited() const
 void Node::setVisited()
 {
     Node::alreadyVisited = true;
+}
+
+void Node::setNonVisited()
+{
+    Node::alreadyVisited = false;
 }
 
 char Node::getVisitedBy() const
