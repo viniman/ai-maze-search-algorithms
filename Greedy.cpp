@@ -38,7 +38,7 @@ void Greedy::greedySearchAlgorithm(Maze& maze)
 
         if(proximo != NULL)
         {
-            if((!proximo->getVisitedBy()) && (proximo->getHeuristicValue() < distancia))
+            if((!proximo->isVisited()) && (proximo->getHeuristicValue() < distancia))
             {
                 menor = proximo;
                 distancia = menor->getHeuristicValue();
@@ -50,7 +50,7 @@ void Greedy::greedySearchAlgorithm(Maze& maze)
 
         if(proximo != NULL)
         {
-            if((!proximo->getVisitedBy()) && (proximo->getHeuristicValue() < distancia))
+            if((!proximo->isVisited()) && (proximo->getHeuristicValue() < distancia))
             {
                 menor = proximo;
                 distancia = menor->getHeuristicValue();
@@ -62,7 +62,7 @@ void Greedy::greedySearchAlgorithm(Maze& maze)
 
         if(proximo != NULL)
         {
-            if((!proximo->getVisitedBy()) && (proximo->getHeuristicValue() < distancia))
+            if((!proximo->isVisited()) && (proximo->getHeuristicValue() < distancia))
             {
                 menor = proximo;
                 distancia = menor->getHeuristicValue();
