@@ -13,6 +13,7 @@ class Backtracking : public SearchAlgorithm
 {
 public:
     static void backtrackingSearchAlgorithm(Maze& maze);
+    static void backtrackingSearchAlgorithmPAI(Maze& maze);
 };
 
 

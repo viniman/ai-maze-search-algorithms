@@ -217,3 +217,9 @@ const Node* Maze::getRoom(int id) const
     return rooms[id];
 }
 
+void Maze::setVisitedAllFalse()
+{
+    for(auto& it : rooms)
+        it->setNonVisited();
+}
+

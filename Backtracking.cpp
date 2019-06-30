@@ -48,3 +48,47 @@ void Backtracking::backtrackingSearchAlgorithm(Maze& maze)
     if(success)
         cout << "SUCESSO" << endl;
 }
+
+void Backtracking::backtrackingSearchAlgorithmPAI(Maze& maze)
+{
+    operations.push_back('R');
+    operations.push_back('L');
+    operations.push_back('T');
+    operations.push_back('B');
+
+    bool failure, success;
+    failure = success = false;
+
+    Node* searchPointer = maze.getOrigin();
+
+    while (!(failure || success))
+    {
+        char nextOp = nextOperation(searchPointer); // proxima operacao a tomar
+        Node* neighborhood = searchPointer->roomDirectionReturn(nextOp);
+        if(nextOp != 'N' && neighborhood)
+        {
+            neighborhood->setFather(searchPointer);//pai = searchPointer;
+            searchPointer->setDirectionVisited(nextOp);
+            searchPointer = neighborhood;
+            searchPointer->setVisitedBy(nextOp);
+            searchPointer->setVisited();
+            if(searchPointer->getId() == maze.getDestination()->getId())
+                success = true;
+        }
+        else
+        {
+            if(searchPointer->getId() == maze.getOrigin()->getId())
+                failure = true;
+            else
+            {
+                //nextOp = oppositeWay(searchPointer->getVisitedBy());//funcao para pegar o pai
+                //searchPointer = searchPointer->roomDirectionReturn(nextOp);
+                searchPointer = searchPointer->getFather();
+            }
+        }
+    }
+    if(failure)
+        cout << "FALHA" << endl;
+    if(success)
+        cout << "SUCESSO" << endl;
+}

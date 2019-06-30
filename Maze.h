@@ -33,6 +33,7 @@ public:
     char operacao(Node *no1, Node *no2);
     void calculaXY();
     int manhattanDistance(Node *no1);
+    void setVisitedAllFalse();
 
 };
 
