@@ -13,6 +13,8 @@ private:
     char visitedBy = 'N';
     bool alreadyVisited = false;
     unsigned int heuristicValue;
+    unsigned int distanceOrigin = 0;
+    unsigned int sumHeurDist = 0;
     int id;
     int x;
     int y;
@@ -50,6 +52,11 @@ public:
     int getId() const;
     int getX() const;
     int getY() const;
+    unsigned int getdistanceOrigin();
+    void setdistanceOrigin(unsigned int distanceOrigin);
+    unsigned int getsumHeurDist();
+    void setsumHeurDist(unsigned int sumHeurDist);
+
 
 };
 

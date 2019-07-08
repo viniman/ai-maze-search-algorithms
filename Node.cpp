@@ -159,3 +159,28 @@ Node::Node(int id)
 {
     Node::id = id;
 }
+
+unsigned int Node::getdistanceOrigin()
+{
+    return distanceOrigin;
+}
+
+void Node::setdistanceOrigin(unsigned int distanceOrigin)
+{
+
+    this->distanceOrigin = distanceOrigin;
+
+}
+
+unsigned int Node::getsumHeurDist()
+{
+
+    return sumHeurDist;
+}
+
+void Node::setsumHeurDist(unsigned int sumHeurDist)
+{
+
+    this->sumHeurDist = sumHeurDist;
+
+}

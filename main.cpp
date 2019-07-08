@@ -8,6 +8,8 @@
 #include "Backtracking.h"
 #include "Depth.h"
 #include "Greedy.h"
+#include "AStar.h"
+
 using namespace std;
 
 
@@ -20,7 +22,9 @@ int main(int argc, char** argv)
     //Backtracking::backtrackingSearchAlgorithm(maze);
     //Depth::DepthSearchAlgorithm(maze);
 
-    Greedy::greedySearchAlgorithm(maze);
+    //Greedy::greedySearchAlgorithm(maze);
+
+    AStar::ASearchAlgorithm(maze);
 
     return 0;
 }
