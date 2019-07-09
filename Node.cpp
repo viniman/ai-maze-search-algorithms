@@ -87,7 +87,9 @@ char Node::getVisitedBy() const
 
 bool Node::isVisited() const
 {
-    return alreadyVisited;
+    if(this)
+        return alreadyVisited;
+    return true;
 }
 
 void Node::setDirectionVisited(char directionVisited)
@@ -125,7 +127,7 @@ unsigned int Node::getHeuristicValue() const
     return heuristicValue;
 }
 
-int Node::getId() const
+unsigned int Node::getId() const
 {
     return id;
 }

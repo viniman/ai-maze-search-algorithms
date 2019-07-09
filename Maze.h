@@ -24,16 +24,20 @@ private:
 
 public:
     explicit Maze(string path);
+    explicit Maze(unsigned int m, unsigned int n, bool addDoors, unsigned int origin=0, unsigned int dest=0);
     Node *getOrigin() const;
     Node *getDestination() const;
+    void setDestination(unsigned int id);
+    void setOrigin(unsigned int id);
     unsigned int getMazeLines() const;
     unsigned int getMazeColumns() const;
     unsigned int getNumRooms() const;
-    const Node* getRoom(int id) const;
+    Node * getRoom(int id) const;
     char operacao(Node *no1, Node *no2);
     void calculaXY();
     int manhattanDistance(Node *no1);
     void setVisitedAllFalse();
+    void addDoor(unsigned int room1, unsigned int room2);
 
 };
 

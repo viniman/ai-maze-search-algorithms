@@ -7,11 +7,13 @@
 
 #include <string>
 #include "Maze.h"
+#include <stack>
 
 class Utils
 {
 public:
     static Maze instanceReader(const std::string &instancePathName);
+    static Maze *mazeGenerator(unsigned int m, unsigned int n);
 };
 
 

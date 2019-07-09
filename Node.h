@@ -49,7 +49,7 @@ public:
     void setDirectionVisited(char directionVisited);
     void setVisitedBy(char visitedBy);
     unsigned int getHeuristicValue() const;
-    int getId() const;
+    unsigned int getId() const;
     int getX() const;
     int getY() const;
     unsigned int getdistanceOrigin();

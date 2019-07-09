@@ -68,7 +68,7 @@ Maze::Maze(string path)
         for(auto& it : rooms)
             it->setHeuristicValue(manhattanDistance(it));
 
-        int room1, room2;
+        unsigned int room1, room2;
         char direction;
         while (p != nullptr)
         {
@@ -77,34 +77,7 @@ Maze::Maze(string path)
             stream << p;
             stream >> room1 >> room2;
 
-            switch (operacao(rooms[room1],rooms[room2]))
-            {
-
-                case 'R':
-                {
-                    rooms[room1]->setRight(rooms[room2]);
-                    rooms[room2]->setLeft(rooms[room1]);
-                    break;
-                }
-                case 'L':
-                {
-                    rooms[room1]->setLeft(rooms[room2]);
-                    rooms[room2]->setRight(rooms[room1]);
-                    break;
-                }
-                case 'B':
-                {
-                    rooms[room1]->setBotton(rooms[room2]);
-                    rooms[room2]->setTop(rooms[room1]);
-                    break;
-                }
-                case 'T':
-                {
-                    rooms[room1]->setTop(rooms[room2]);
-                    rooms[room2]->setBotton(rooms[room1]);
-                    break;
-                }
-            }
+            addDoor(room1, room2);
         }
         delete[] buffer;
         return;
@@ -212,7 +185,7 @@ Node *Maze::getDestination() const
     return destination;
 }
 
-const Node* Maze::getRoom(int id) const
+Node * Maze::getRoom(int id) const
 {
     return rooms[id];
 }
@@ -222,4 +195,116 @@ void Maze::setVisitedAllFalse()
     for(auto& it : rooms)
         it->setNonVisited();
 }
+
+/**
+ * Construtor de labirintos com suas dimensões, pondendo setar para adicionar as portas ou não
+ * @param m
+ * @param n
+ * @param addDoors
+ * @param origin
+ * @param dest
+ */
+Maze::Maze(unsigned int m, unsigned int n, bool addDoors, unsigned int origin, unsigned int dest)
+{
+    mazeLines = m;
+    mazeColumns = n;
+    numRooms = m*n;
+    //rooms = vector<Node*>(numRooms, nullptr);
+
+    for(int i = 0; i < numRooms; ++i)
+    {
+        //Node* node = new Node(i);
+        //rooms[i] = new Node(i);
+        rooms.push_back(new Node(i));
+    }
+
+
+    //for(auto i : rooms)
+        //cout << i->getId() << ", ";
+    cout << endl;
+
+/*    for(unsigned int room1 = 0, room2 = 0; room1 < n-1; ++room1)
+    {
+        room2 = room1+1;
+        addDoor(room1, room2);
+        for(unsigned int room2 = room1; room2 < n-1; ++room2)
+        {
+            room1*=10;
+            room2 = room1+10;
+            addDoor(room1, room2);
+        }
+
+    }*/
+
+    calculaXY();
+
+    // Necessario para o algoritmo de geracao de labirinto
+    if(addDoors)
+    {
+        for (unsigned int i = 0; i < n*m-1; ++i)
+        {
+            if(i%n != n-1)
+                addDoor(i, i+1);
+        }
+        for (unsigned int i = 0; i < (n-1)*m; ++i)
+        {
+            addDoor(i, i+n);
+        }
+        /*for (unsigned int room2 = room1; room2 < m; ++room2)
+        {
+            if(room2/n) //n
+                addDoor(room2, room2 + 1);
+            //if(room2<=m*n-n) //m
+            addDoor(room2, room2 + n);
+
+        }*/
+    }
+/*    else
+    {
+        for(auto& it : rooms)
+            it->setHeuristicValue(manhattanDistance(it));
+    }*/
+}
+
+void Maze::addDoor(unsigned int room1, unsigned int room2)
+{
+    switch (operacao(rooms[room1],rooms[room2]))
+    {
+        case 'R':
+        {
+            rooms[room1]->setRight(rooms[room2]);
+            rooms[room2]->setLeft(rooms[room1]);
+            break;
+        }
+        case 'L':
+        {
+            rooms[room1]->setLeft(rooms[room2]);
+            rooms[room2]->setRight(rooms[room1]);
+            break;
+        }
+        case 'B':
+        {
+            rooms[room1]->setBotton(rooms[room2]);
+            rooms[room2]->setTop(rooms[room1]);
+            break;
+        }
+        case 'T':
+        {
+            rooms[room1]->setTop(rooms[room2]);
+            rooms[room2]->setBotton(rooms[room1]);
+            break;
+        }
+    }
+}
+
+void Maze::setDestination(unsigned int id)
+{
+    destination = rooms[id];
+}
+
+void Maze::setOrigin(unsigned int id)
+{
+    origin = rooms[id];
+}
+
 
