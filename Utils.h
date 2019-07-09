@@ -14,6 +14,8 @@ class Utils
 public:
     static Maze instanceReader(const std::string &instancePathName);
     static Maze *mazeGenerator(unsigned int m, unsigned int n);
+    static void newGenerator(unsigned int m, unsigned int n, unsigned int roomsWithDoor);
+    static bool emptyRoom(unsigned long long int& iterator, unsigned long long int& room, unsigned int& m, unsigned int& n, unsigned int& r);
 };
 
 
