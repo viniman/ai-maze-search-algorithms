@@ -7,6 +7,7 @@
 
 #include <vector>
 #include "Node.h"
+#include "Maze.h"
 
 class SearchAlgorithm
 {
@@ -14,6 +15,7 @@ public:
     static std::vector<char> operations;
     static char oppositeWay(char c);
     static char nextOperation(Node* searchPointer);
+    static void cleanMazeForSearch(Maze& maze);
 };
 
 

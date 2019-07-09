@@ -6,6 +6,8 @@
 
 void Greedy::greedySearchAlgorithm(Maze& maze)
 {
+    cleanMazeForSearch(maze);
+
     //Nó de origem e nós auxiliares
     Node *corrente = maze.getOrigin();
     Node *proximo = NULL;

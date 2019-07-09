@@ -88,7 +88,10 @@ Maze::Maze(string path)
     exit(-1);
 }
 
-
+const vector<Node *> &Maze::getRooms() const
+{
+    return rooms;
+}
 
 
 void Maze::calculaXY()

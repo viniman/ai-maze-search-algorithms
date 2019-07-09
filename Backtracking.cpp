@@ -9,6 +9,8 @@ vector<char> SearchAlgorithm::operations;
 
 void Backtracking::backtrackingSearchAlgorithm(Maze& maze)
 {
+    cleanMazeForSearch(maze);
+
     operations.push_back('R');
     operations.push_back('L');
     operations.push_back('T');
@@ -44,9 +46,9 @@ void Backtracking::backtrackingSearchAlgorithm(Maze& maze)
         }
     }
     if(failure)
-        cout << "FALHA" << endl;
+        cout << "FALHA Backtracking" << endl;
     if(success)
-        cout << "SUCESSO" << endl;
+        cout << "SUCESSO Backtracking" << endl;
 }
 
 void Backtracking::backtrackingSearchAlgorithmPAI(Maze& maze)

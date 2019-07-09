@@ -63,3 +63,15 @@ char SearchAlgorithm::nextOperation(Node* searchPointer)
 
 
 }
+
+void SearchAlgorithm::cleanMazeForSearch(Maze& maze)
+{
+    for(auto& iterator : maze.getRooms())
+    {
+        iterator->setVisitedBy('N');
+        iterator->setDirectionVisited('N');
+        iterator->setNonVisited();
+        iterator->setdistanceOrigin(0);
+        iterator->setsumHeurDist(0);
+    }
+}

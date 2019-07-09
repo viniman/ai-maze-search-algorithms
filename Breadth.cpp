@@ -10,6 +10,8 @@ using namespace std;
 
 void Breadth::breadthSearchAlgorithm(Maze &maze)
 {
+    cleanMazeForSearch(maze);
+
     queue<Node*> openedNodeList;
     queue<Node*> closedNodeList;
     Node* searchPointer = maze.getOrigin();

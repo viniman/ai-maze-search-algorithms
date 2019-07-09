@@ -39,6 +39,8 @@ public:
     void setVisitedAllFalse();
     void addDoor(unsigned int room1, unsigned int room2);
 
+    const vector<Node *> &getRooms() const;
+
 };
 
 

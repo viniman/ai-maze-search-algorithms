@@ -6,6 +6,7 @@
 
 void Depth::DepthSearchAlgorithm(Maze& maze)
 {
+    cleanMazeForSearch(maze);
 
     stack<Node*> stackNode;             //Pilha de nós
     stackNode.push(maze.getOrigin());   //Coloca a origem no topo da pilha.
@@ -71,7 +72,7 @@ void Depth::DepthSearchAlgorithm(Maze& maze)
         cout<<"SUCESSO DepthSearch\n";
 
     else
-        cout<<"FRACASSO\n";
+        cout<<"FRACASSO DepthSearch\n";
 
 
 
