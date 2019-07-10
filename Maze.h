@@ -24,6 +24,9 @@ private:
 
 public:
     explicit Maze(string path);
+
+    virtual ~Maze();
+
     explicit Maze(unsigned int m, unsigned int n, bool addDoors, unsigned int origin=0, unsigned int dest=0);
     Node *getOrigin() const;
     Node *getDestination() const;
@@ -40,6 +43,8 @@ public:
     void addDoor(unsigned int room1, unsigned int room2);
 
     const vector<Node *> &getRooms() const;
+    int** weightMatrix;
+    void initiateWeightMatrix();
 
 };
 

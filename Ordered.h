@@ -10,7 +10,8 @@
 
 class Ordered : public SearchAlgorithm
 {
-
+public:
+    static void orderedSearchAlgorithm(Maze &maze);
 };
 
 

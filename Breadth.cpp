@@ -18,7 +18,7 @@ void Breadth::breadthSearchAlgorithm(Maze &maze)
     bool failure, success;
     failure = success = false;
 
-    Node* neighborhood;
+    Node* neighbor;
 
     openedNodeList.push(searchPointer);
 
@@ -40,12 +40,12 @@ void Breadth::breadthSearchAlgorithm(Maze &maze)
                 do
                 {
                     char nextOp = nextOperation(searchPointer);
-                    neighborhood = searchPointer->roomDirectionReturn(nextOp);
-                    if(neighborhood && !neighborhood->isVisited())
+                    neighbor = searchPointer->roomDirectionReturn(nextOp);
+                    if(neighbor && !neighbor->isVisited())
                     {
-                        neighborhood->setVisitedBy(nextOp);
-                        neighborhood->setVisited();
-                        openedNodeList.push(neighborhood);
+                        neighbor->setVisitedBy(nextOp);
+                        neighbor->setVisited();
+                        openedNodeList.push(neighbor);
                     }
                     searchPointer->setDirectionVisited(nextOp);
                 }

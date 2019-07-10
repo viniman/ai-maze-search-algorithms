@@ -63,6 +63,7 @@ Maze * Utils::mazeGenerator(unsigned int m, unsigned int n)
             stackRooms.push(currentCell);
 
             mazeGenerated->addDoor(currentCell->getId(), choosenCell->getId());
+            mazeGenerated->weightMatrix[currentCell->getId()/mazeGenerated->getMazeColumns()][choosenCell->getId()%mazeGenerated->getMazeColumns()] = 1;
 
             currentCell = choosenCell;
             currentCell->setVisited();
@@ -190,23 +191,6 @@ void Utils::newGenerator(unsigned int m, unsigned int n, unsigned int roomsWithD
 
 
     ///////////////////////////////////////////////////////////////////////////////
-
-
-   /*
-
-    for(long long int i = 0; i < m; ++i){
-        for(long long int j = 0; j < n; ++j){
-            file << M[i * n + j] << " ";
-        }
-        file << "\n";
-    }
-
-    for(long long int i = 0; i < m; ++i){
-        for(long long int j = 0; j < n; ++j){
-            if(M[i * n + j])
-                file << M[i * n + j] << " " << getManhattanDistance(i, j, destination) << "\n";
-        }
-    }*/
 
     file.close();
 }

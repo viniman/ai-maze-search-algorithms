@@ -10,7 +10,6 @@
 #include "Maze.h"
 #include <cmath>
 
-
 Maze::Maze(string path)
 {
 
@@ -49,6 +48,8 @@ Maze::Maze(string path)
 
         stream >> this->mazeLines >> this->mazeColumns  >> originId >> destinationId;
 
+        initiateWeightMatrix();
+
         this->numRooms = this->mazeLines * this->mazeColumns;
 
         rooms = vector<Node*>(numRooms, nullptr);
@@ -78,7 +79,11 @@ Maze::Maze(string path)
             stream >> room1 >> room2;
 
             addDoor(room1, room2);
+
+            weightMatrix[room1/mazeColumns][room2%mazeColumns] = 1;
+            weightMatrix[room2/mazeColumns][room1%mazeColumns] = 1;
         }
+
         delete[] buffer;
         return;
     }
@@ -86,6 +91,103 @@ Maze::Maze(string path)
     cout << "\tO caminho tentado foi: \"" << path << "\"." << endl;
     cout << "\tVERIFIQUE se digitou o nome do diretorio path corretamente." << endl;
     exit(-1);
+}
+
+
+/**
+ * Construtor de labirintos com suas dimensões, pondendo setar para adicionar as portas ou não
+ * @param m
+ * @param n
+ * @param addDoors
+ * @param origin
+ * @param dest
+ */
+Maze::Maze(unsigned int m, unsigned int n, bool addDoors, unsigned int origin, unsigned int dest)
+{
+    mazeLines = m;
+    mazeColumns = n;
+    numRooms = m*n;
+    //rooms = vector<Node*>(numRooms, nullptr);
+
+    for(int i = 0; i < numRooms; ++i)
+    {
+        //Node* node = new Node(i);
+        //rooms[i] = new Node(i);
+        rooms.push_back(new Node(i));
+    }
+
+    initiateWeightMatrix();
+
+    //for(auto i : rooms)
+    //cout << i->getId() << ", ";
+    cout << endl;
+
+/*    for(unsigned int room1 = 0, room2 = 0; room1 < n-1; ++room1)
+    {
+        room2 = room1+1;
+        addDoor(room1, room2);
+        for(unsigned int room2 = room1; room2 < n-1; ++room2)
+        {
+            room1*=10;
+            room2 = room1+10;
+            addDoor(room1, room2);
+        }
+
+    }*/
+
+    calculaXY();
+
+    // Necessario para o algoritmo de geracao de labirinto (cria todas as portas)
+    if(addDoors)
+    {
+        //Adiciona portas na horizontal
+        for (unsigned int i = 0; i < n*m-1; ++i)
+        {
+            if(i%n != n-1)
+                addDoor(i, i+1);
+
+        }
+        //Adiciona portas na vertical
+        for (unsigned int i = 0; i < (n-1)*m; ++i)
+        {
+            addDoor(i, i+n);
+        }
+        /*for (unsigned int room2 = room1; room2 < m; ++room2)
+        {
+            if(room2/n) //n
+                addDoor(room2, room2 + 1);
+            //if(room2<=m*n-n) //m
+            addDoor(room2, room2 + n);
+
+        }*/
+    }
+/*    else
+    {
+        for(auto& it : rooms)
+            it->setHeuristicValue(manhattanDistance(it));
+    }*/
+}
+
+
+Maze::~Maze()
+{
+    //liberar memória
+    for(int i = 0;i < this->mazeLines; ++i)
+        delete [] weightMatrix[i];
+    delete [] weightMatrix;
+}
+
+void Maze::initiateWeightMatrix()
+{
+    this->weightMatrix = new int*[mazeLines];
+    for (int i = 0; i < mazeColumns; ++i)
+    {
+        this->weightMatrix[i] = new int[mazeColumns];
+    }
+
+    for(int i = 0;i < mazeLines; ++i)
+        for(int j = 0;j < mazeColumns; ++j)
+            weightMatrix[i][j] = 0;
 }
 
 const vector<Node *> &Maze::getRooms() const
@@ -199,76 +301,6 @@ void Maze::setVisitedAllFalse()
         it->setNonVisited();
 }
 
-/**
- * Construtor de labirintos com suas dimensões, pondendo setar para adicionar as portas ou não
- * @param m
- * @param n
- * @param addDoors
- * @param origin
- * @param dest
- */
-Maze::Maze(unsigned int m, unsigned int n, bool addDoors, unsigned int origin, unsigned int dest)
-{
-    mazeLines = m;
-    mazeColumns = n;
-    numRooms = m*n;
-    //rooms = vector<Node*>(numRooms, nullptr);
-
-    for(int i = 0; i < numRooms; ++i)
-    {
-        //Node* node = new Node(i);
-        //rooms[i] = new Node(i);
-        rooms.push_back(new Node(i));
-    }
-
-
-    //for(auto i : rooms)
-        //cout << i->getId() << ", ";
-    cout << endl;
-
-/*    for(unsigned int room1 = 0, room2 = 0; room1 < n-1; ++room1)
-    {
-        room2 = room1+1;
-        addDoor(room1, room2);
-        for(unsigned int room2 = room1; room2 < n-1; ++room2)
-        {
-            room1*=10;
-            room2 = room1+10;
-            addDoor(room1, room2);
-        }
-
-    }*/
-
-    calculaXY();
-
-    // Necessario para o algoritmo de geracao de labirinto
-    if(addDoors)
-    {
-        for (unsigned int i = 0; i < n*m-1; ++i)
-        {
-            if(i%n != n-1)
-                addDoor(i, i+1);
-        }
-        for (unsigned int i = 0; i < (n-1)*m; ++i)
-        {
-            addDoor(i, i+n);
-        }
-        /*for (unsigned int room2 = room1; room2 < m; ++room2)
-        {
-            if(room2/n) //n
-                addDoor(room2, room2 + 1);
-            //if(room2<=m*n-n) //m
-            addDoor(room2, room2 + n);
-
-        }*/
-    }
-/*    else
-    {
-        for(auto& it : rooms)
-            it->setHeuristicValue(manhattanDistance(it));
-    }*/
-}
-
 void Maze::addDoor(unsigned int room1, unsigned int room2)
 {
     switch (operacao(rooms[room1],rooms[room2]))
@@ -309,5 +341,6 @@ void Maze::setOrigin(unsigned int id)
 {
     origin = rooms[id];
 }
+
 
 
