@@ -106,7 +106,7 @@ namespace std {
 
 void Utils::newGenerator(unsigned int m, unsigned int n, unsigned int roomsWithDoor)
 {
-    unsigned long long int * M = nullptr, room = 1, origin = 0, destination = 0;
+    unsigned long long int * M = nullptr, room = 0, origin = 0, destination = 0;
 
     stringstream fileString;
     fstream file;
@@ -119,20 +119,28 @@ void Utils::newGenerator(unsigned int m, unsigned int n, unsigned int roomsWithD
         if(room > roomsWithDoor || emptyRoom(i, room, m, n, roomsWithDoor))
             M[i] = 0;
         else {
-            if(room == 1)
+            if(room == 0)
                 origin = i;
-            else if(room == roomsWithDoor)
+            else if(room == roomsWithDoor-1)
                 destination = i;
 
-            M[i] = room++;
+            M[i] = i;
+            room++;
         }
     }
 
-    fileString << "instance_" << m << "_" << n << "_" << roomsWithDoor << "_" << origin << "_" << destination  << ".in";
+    fileString << "instance_" << m << "_" << n << "_" << origin << "_" << destination  << ".in"; //roomsWithDoor
     file.open(fileString.str(), fstream::out);
 
-    file << m << " " << n << " " << roomsWithDoor << " " << M[origin] << " " << M[destination] << "\n";
+    file << m << " " << n << " " << M[origin] << " " << M[destination] << "\n"; //roomsWithDoor <<
 
+    for(unsigned long long int i = 0; i < m * n; ++i)
+    {
+        cout << M[i] << " ";
+        if((i+1)%n==0)
+            cout << "\n";
+
+    }
 
 
 
