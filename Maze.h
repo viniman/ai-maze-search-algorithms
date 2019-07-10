@@ -44,7 +44,8 @@ public:
 
     const vector<Node *> &getRooms() const;
     int** weightMatrix;
-    void initiateWeightMatrix();
+    void initiateWeightMatrix(bool randomizedWeight, unsigned int maxRandValue);
+
 
 };
 

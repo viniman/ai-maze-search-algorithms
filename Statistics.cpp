@@ -6,12 +6,12 @@
 
 void Statistics::startTiming()
 {
-    time = clock();
+    timeInit = clock();
 }
 
 void Statistics::executionTimeMeasure()
 {
-    time = (clock() - time)/CLOCKS_PER_SEC;
+    executionTime = (clock() - timeInit)/(double)CLOCKS_PER_SEC;
 }
 
 void Statistics::expandirNo()

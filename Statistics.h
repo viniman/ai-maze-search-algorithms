@@ -6,21 +6,26 @@
 #define AI_MAZE_SEARCH_ALGORITHMS_STATISTICS_H
 
 #include <ctime>
+
 /**
- * Caminho, profundidade e custo da solução;
- * Número total de nós expandidos e visitados;
- * Valor médio do fator
+ * Caminho, profundidade e custo da solução
+ * Número total de nós expandidos e visitados
+ * Valor médio do fator de ramificação da árvore de busca
  * Tempo de execução
  */
 class Statistics
 {
 private:
-    clock_t time;
+    clock_t timeInit;
+    double executionTime;
+    int* pathSolution;
+    unsigned int averageRamificationTreeSearch;
     unsigned int nosExpandidos = 0;
     unsigned int nosVisitados = 0;
     unsigned int profundidade = 0;
     unsigned int profundidadeSolucao = 0;
     unsigned int custoSolucao = 0;
+
 
 
 

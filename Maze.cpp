@@ -10,6 +10,9 @@
 #include "Maze.h"
 #include <cmath>
 
+#define HAS_RAND_WEIGHT false
+#define VALUE_MAX_RAND_WEIGHT 200
+
 Maze::Maze(string path)
 {
 
@@ -48,7 +51,7 @@ Maze::Maze(string path)
 
         stream >> this->mazeLines >> this->mazeColumns  >> originId >> destinationId;
 
-        initiateWeightMatrix();
+        initiateWeightMatrix(HAS_RAND_WEIGHT, VALUE_MAX_RAND_WEIGHT);
 
         this->numRooms = this->mazeLines * this->mazeColumns;
 
@@ -79,9 +82,8 @@ Maze::Maze(string path)
             stream >> room1 >> room2;
 
             addDoor(room1, room2);
-
-            weightMatrix[room1/mazeColumns][room2%mazeColumns] = 1;
-            weightMatrix[room2/mazeColumns][room1%mazeColumns] = 1;
+            //weightMatrix[room1/mazeColumns][room2%mazeColumns] = 1;
+            //weightMatrix[room2/mazeColumns][room1%mazeColumns] = 1;
         }
 
         delete[] buffer;
@@ -116,7 +118,7 @@ Maze::Maze(unsigned int m, unsigned int n, bool addDoors, unsigned int origin, u
         rooms.push_back(new Node(i));
     }
 
-    initiateWeightMatrix();
+    initiateWeightMatrix(HAS_RAND_WEIGHT, VALUE_MAX_RAND_WEIGHT);
 
     //for(auto i : rooms)
     //cout << i->getId() << ", ";
@@ -177,7 +179,7 @@ Maze::~Maze()
     delete [] weightMatrix;
 }
 
-void Maze::initiateWeightMatrix()
+void Maze::initiateWeightMatrix(bool randomizedWeight, unsigned int maxRandValue)
 {
     this->weightMatrix = new int*[mazeLines];
     for (int i = 0; i < mazeColumns; ++i)
@@ -186,8 +188,25 @@ void Maze::initiateWeightMatrix()
     }
 
     for(int i = 0;i < mazeLines; ++i)
-        for(int j = 0;j < mazeColumns; ++j)
-            weightMatrix[i][j] = 0;
+    {
+        for(int j = i;j < mazeColumns; ++j)
+        {
+            if(randomizedWeight)
+            {
+                int randValue = rand()%maxRandValue;
+                weightMatrix[i][j] = randValue;
+                weightMatrix[j][i] = randValue;
+            }
+            else
+            {
+                weightMatrix[i][j] = 1;
+                weightMatrix[j][i] = 1;
+            }
+
+        }
+    }
+
+
 }
 
 const vector<Node *> &Maze::getRooms() const

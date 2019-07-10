@@ -29,7 +29,6 @@ Maze Utils::instanceReader(const string &instancePathName)
  */
 Maze * Utils::mazeGeneratorRecursiveBacktracker(unsigned int m, unsigned int n, bool writeInstance)
 {
-    srand (time(NULL));
     //vector<char> operations = {'L', 'R', 'T', 'B'};
     Maze* maze = new Maze(m, n, true);
     // Criacao com nenhuma porta, como se tivesse parede entre todos
@@ -64,7 +63,8 @@ Maze * Utils::mazeGeneratorRecursiveBacktracker(unsigned int m, unsigned int n, 
             stackRooms.push(currentCell);
 
             mazeGenerated->addDoor(currentCell->getId(), choosenCell->getId());
-            mazeGenerated->weightMatrix[currentCell->getId()/mazeGenerated->getMazeColumns()][choosenCell->getId()%mazeGenerated->getMazeColumns()] = 1;
+            //mazeGenerated->weightMatrix[currentCell->getId()/mazeGenerated->getMazeColumns()][choosenCell->getId()%mazeGenerated->getMazeColumns()] = 1;
+            //mazeGenerated->weightMatrix[currentCell->getId()%mazeGenerated->getMazeColumns()][choosenCell->getId()/mazeGenerated->getMazeColumns()] = 1;
 
             currentCell = choosenCell;
             currentCell->setVisited();
