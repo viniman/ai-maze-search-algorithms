@@ -7,6 +7,7 @@ using namespace std;
 
 void AStar::ASearchAlgorithm(Maze& maze)
 {
+    cleanMazeForSearch(maze);
 
     list<Node*> listNode;
 
@@ -17,7 +18,8 @@ void AStar::ASearchAlgorithm(Maze& maze)
     corrente->setdistanceOrigin(0);
     corrente->setsumHeurDist(corrente->getHeuristicValue());
 
-    Node **aux;
+    Node *aux2 = new Node(0,0);
+    Node **aux =&aux2;
 
     //Inicializa a lista com a origem
     listNode.push_back(maze.getOrigin());
@@ -34,7 +36,6 @@ void AStar::ASearchAlgorithm(Maze& maze)
         insereNode(&listNode, corrente, corrente->getBotton());
         insereNode(&listNode, corrente, corrente->getRight());
 
-
     }
 
     if((maze.getDestination())->isVisited())
@@ -42,11 +43,19 @@ void AStar::ASearchAlgorithm(Maze& maze)
     else
         std::cout<<"FRACASSO ASTAR\n";
 
+    delete aux2;
+
 }
 
 bool AStar::removeBest(list<Node*> *listNode, Node **corrente)
 {
     Node *aux;
+
+    if(corrente == NULL)
+    {
+        cout<<"Corrente NULL\n";
+        exit(-5);
+    }
 
     if(listNode->empty())  //Verifica se a lista está vazia.
         return false;

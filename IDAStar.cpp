@@ -7,6 +7,8 @@
 void IDAStar::IDAStarSearchAlgorithm(Maze &maze, Statistics &statistics)
 {
 
+    cleanMazeForSearch(maze);
+
     float oldPatamar = HUGE_VALF;
     float patamar = (maze.getOrigin())->getHeuristicValue();
 
@@ -66,7 +68,8 @@ void IDAStar::IDAStarSearchAlgorithm(Maze &maze, Statistics &statistics)
                     patamar = oldPatamar;
                     oldPatamar = HUGE_VALF;
 
-                    corrigeNos(maze);
+                    cleanMazeForSearch(maze);
+
                 }
 
             }
@@ -118,19 +121,5 @@ bool IDAStar::verificaPatamar(Node *corrente, Node *direcao, const float patamar
         return false;
     }
 
-}
-
-void IDAStar::corrigeNos(Maze& maze)
-{
-    auto vetRooms = maze.getRooms();
-
-    for(auto it = vetRooms.begin(); it != vetRooms.end(); ++it)
-    {
-        //Corrige parametros
-
-        (*it)->setFather(NULL);
-        (*it)->setdistanceOrigin(0);
-        (*it)->setNonVisited();
-    }
 }
 

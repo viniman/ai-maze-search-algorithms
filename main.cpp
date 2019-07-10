@@ -27,7 +27,9 @@ int main(int argc, char** argv)
 
     //Greedy::greedySearchAlgorithm(maze);
 
-    //AStar::ASearchAlgorithm(maze);
+    AStar::ASearchAlgorithm(maze);
+
+
 
     IDAStar::IDAStarSearchAlgorithm(maze, statistics);
 

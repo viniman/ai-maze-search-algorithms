@@ -22,7 +22,6 @@ public:
 private:
     static bool
     verificaPatamar(Node *corrente, Node *direcao, const float patamar, float *oldpatamar, Statistics &statistics);
-    static void corrigeNos(Maze& maze);
 
 };
 
