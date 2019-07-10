@@ -13,9 +13,10 @@ class Utils
 {
 public:
     static Maze instanceReader(const std::string &instancePathName);
-    static Maze *mazeGenerator(unsigned int m, unsigned int n);
-    static void newGenerator(unsigned int m, unsigned int n, unsigned int roomsWithDoor);
+    static Maze *mazeGeneratorRecursiveBacktracker(unsigned int m, unsigned int n, bool writeInstance);
+    static void newGeneratorRandomized(unsigned int m, unsigned int n, unsigned int roomsWithDoor);
     static bool emptyRoom(unsigned long long int& iterator, unsigned long long int& room, unsigned int& m, unsigned int& n, unsigned int& r);
+    static void writeToFile(string str, string pathTosave);
 };
 
 

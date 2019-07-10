@@ -6,7 +6,12 @@
 #define AI_MAZE_SEARCH_ALGORITHMS_STATISTICS_H
 
 #include <ctime>
-
+/**
+ * Caminho, profundidade e custo da solução;
+ * Número total de nós expandidos e visitados;
+ * Valor médio do fator
+ * Tempo de execução
+ */
 class Statistics
 {
 private:

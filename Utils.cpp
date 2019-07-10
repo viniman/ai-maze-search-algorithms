@@ -22,11 +22,12 @@ Maze Utils::instanceReader(const string &instancePathName)
 /**
  * Mazes generated with a depth-first search have a low branching factor and contain many long corridors,
  * because the algorithm explores as far as possible along each branch before backtracking. [Wikipedia]
+ * https://en.wikipedia.org/wiki/Maze_generation_algorithm
  * @param m
  * @param n
  * @return
  */
-Maze * Utils::mazeGenerator(unsigned int m, unsigned int n)
+Maze * Utils::mazeGeneratorRecursiveBacktracker(unsigned int m, unsigned int n, bool writeInstance)
 {
     srand (time(NULL));
     //vector<char> operations = {'L', 'R', 'T', 'B'};
@@ -78,6 +79,63 @@ Maze * Utils::mazeGenerator(unsigned int m, unsigned int n)
     }
     mazeGenerated->setDestination((m*n)-1);
     cout << "Labirinto gerado" << endl;
+
+    ///Salva instancia em arquivo
+    if(writeInstance)
+    {
+        auto hash = [](const std::pair<int, int> &p) { return p.first * 31 + p.second; };
+        std::unordered_set<std::pair<int, int>, decltype(hash)> set(8, hash);
+
+        string saveFileName =
+                "instance_" + to_string(m) + "_" + to_string(n) + "_" + to_string(mazeGenerated->getOrigin()->getId()) +
+                "_" + to_string(mazeGenerated->getDestination()->getId()) + ".in";
+        stringstream ss;
+        ss << m << " " << n << " " << mazeGenerated->getOrigin()->getId() << " "
+           << to_string(mazeGenerated->getDestination()->getId()) << endl;
+
+        for (const auto &it : mazeGenerated->getRooms())
+        {
+
+            if (it->getBotton())
+            {
+                int id1 = it->getId(), id2 = it->getBotton()->getId();
+                if (!set.count(make_pair(id1, id2)) && !set.count(make_pair(id2, id1)))
+                {
+                    ss << id1 << " " << id2 << endl;
+                    set.insert(make_pair(id1, id2));
+                }
+            }
+            if (it->getTop())
+            {
+                int id1 = it->getId(), id2 = it->getTop()->getId();
+                if (!set.count(make_pair(id1, id2)) && !set.count(make_pair(id2, id1)))
+                {
+                    ss << id1 << " " << id2 << endl;
+                    set.insert(make_pair(id1, id2));
+                }
+            }
+            if (it->getRight())
+            {
+                int id1 = it->getId(), id2 = it->getRight()->getId();
+                if (!set.count(make_pair(id1, id2)) && !set.count(make_pair(id2, id1)))
+                {
+                    ss << id1 << " " << id2 << endl;
+                    set.insert(make_pair(id1, id2));
+                }
+            }
+            if (it->getLeft())
+            {
+                int id1 = it->getId(), id2 = it->getLeft()->getId();
+                if (!set.count(make_pair(id1, id2)) && !set.count(make_pair(id2, id1)))
+                {
+                    ss << id1 << " " << id2 << endl;
+                    set.insert(make_pair(id1, id2));
+                }
+            }
+        }
+        writeToFile(ss.str(), saveFileName);
+    }
+
     delete maze;
     return mazeGenerated;
 }
@@ -105,7 +163,7 @@ namespace std {
 //auto hash = [](const std::pair<int, int>& p){ return p.first * 31 + p.second; };
 //std::unordered_set<std::pair<int, int>, decltype(hash)> u_edge_(8, hash);
 
-void Utils::newGenerator(unsigned int m, unsigned int n, unsigned int roomsWithDoor)
+void Utils::newGeneratorRandomized(unsigned int m, unsigned int n, unsigned int roomsWithDoor)
 {
     unsigned long long int * M = nullptr, room = 0, origin = 0, destination = 0;
 
@@ -194,3 +252,12 @@ void Utils::newGenerator(unsigned int m, unsigned int n, unsigned int roomsWithD
 
     file.close();
 }
+
+void Utils::writeToFile(string strToWrite, string pathTosave)
+{
+    fstream file;
+    file.open(pathTosave, fstream::out);
+    file << strToWrite;
+    file.close();
+}
+
