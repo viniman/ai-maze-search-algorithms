@@ -27,9 +27,11 @@ int main(int argc, char** argv)
 
     //Greedy::greedySearchAlgorithm(maze);
 
-    //AStar::ASearchAlgorithm(maze);
+    AStar::ASearchAlgorithm(maze);
 
-    IDAStar::IDAStarSearchAlgorithm(maze, Statistics());
+
+
+    IDAStar::IDAStarSearchAlgorithm(maze, statistics);
 
     return 0;
 }
