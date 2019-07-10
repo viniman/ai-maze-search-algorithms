@@ -29,7 +29,7 @@ int main(int argc, char** argv)
 
     //AStar::ASearchAlgorithm(maze);
 
-    IDAStar::IDAStarSearchAlgorithm(maze, Statistics());
+    IDAStar::IDAStarSearchAlgorithm(maze, statistics);
 
     return 0;
 }
