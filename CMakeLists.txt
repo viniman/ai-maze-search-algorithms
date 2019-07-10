@@ -28,4 +28,6 @@ add_executable(ai_maze_search_algorithms
         Utils.cpp
         Utils.h
         SearchAlgorithm.h
-        SearchAlgorithm.cpp)
+        SearchAlgorithm.cpp
+        Statistics.h
+        Statistics.cpp)

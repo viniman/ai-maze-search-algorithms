@@ -9,7 +9,8 @@
 #include "Depth.h"
 #include "Greedy.h"
 #include "AStar.h"
-
+#include "IDAStar.h"
+#include "Statistics.h"
 using namespace std;
 
 
@@ -17,14 +18,18 @@ using namespace std;
 
 int main(int argc, char** argv)
 {
-    string instanceFileName = "/home/igor/Documentos/ai-maze-search-algorithms/instances/instance10_10_2.in";
+    string instanceFileName = "/home/igor/Documentos/ai-maze-search-algorithms/instances/instance10_10_4.in";
     Maze maze(instanceFileName);
+    Statistics statistics;
+
     //Backtracking::backtrackingSearchAlgorithm(maze);
     //Depth::DepthSearchAlgorithm(maze);
 
     //Greedy::greedySearchAlgorithm(maze);
 
-    AStar::ASearchAlgorithm(maze);
+    //AStar::ASearchAlgorithm(maze);
+
+    IDAStar::IDAStarSearchAlgorithm(maze, Statistics());
 
     return 0;
 }

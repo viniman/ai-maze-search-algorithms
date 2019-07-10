@@ -11,7 +11,6 @@ void AStar::ASearchAlgorithm(Maze& maze)
     list<Node*> listNode;
 
     Node *corrente = maze.getOrigin();
-    Node *nodeAux = NULL;
     Node const * const destination = maze.getDestination();
 
     //Atualiza origem
@@ -27,13 +26,6 @@ void AStar::ASearchAlgorithm(Maze& maze)
     while(removeBest(&listNode, aux) && !(destination->isVisited()))
     {
         corrente = *aux;
-
-        if(corrente == NULL)
-        {
-            cout<<"NULLL;\n";
-            cout<<"Ponteiro Nulo.\n";
-            exit(-5);
-        }
 
         corrente->setVisited();
 
