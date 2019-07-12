@@ -74,5 +74,6 @@ void SearchAlgorithm::cleanMazeForSearch(Maze& maze)
         iterator->setdistanceOrigin(0);
         iterator->setsumHeurDist(0);
         iterator->setFather(NULL);
+        iterator->removerNodeLista();
     }
 }

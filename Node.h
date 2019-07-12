@@ -23,6 +23,7 @@ private:
     Node* botton = nullptr;
     Node* top = nullptr;
     Node* father = nullptr;
+    bool adicionadoLista = false;
 public:
     explicit Node(int id);
     Node(int id, unsigned int heuristicValue);
@@ -56,6 +57,9 @@ public:
     void setdistanceOrigin(unsigned int distanceOrigin);
     unsigned int getsumHeurDist();
     void setsumHeurDist(unsigned int sumHeurDist);
+    void adicionarNodeLista(){adicionadoLista = true;}
+    void removerNodeLista(){adicionadoLista = false;}
+    bool getAdicionadoNodeLista(){return adicionadoLista;}
 
 
 };

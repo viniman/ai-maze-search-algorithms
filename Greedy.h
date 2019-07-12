@@ -10,6 +10,7 @@
 #include "Maze.h"
 #include "math.h"
 #include <iostream>
+#include <list>
 using namespace std;
 
 class Greedy : public SearchAlgorithm
@@ -17,6 +18,10 @@ class Greedy : public SearchAlgorithm
 
 public:
     static void greedySearchAlgorithm(Maze& maze);
+
+private:
+    static bool removeBest(list<Node*> *listNode, Node **corrente);
+    static void insereNode(list<Node*> *listNode, Node *corrente, Node *direcao);
 };
 
 
