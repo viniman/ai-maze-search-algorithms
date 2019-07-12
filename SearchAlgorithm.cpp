@@ -66,6 +66,7 @@ char SearchAlgorithm::nextOperation(Node* searchPointer)
 
 void SearchAlgorithm::cleanMazeForSearch(Maze& maze)
 {
+
     for(auto& iterator : maze.getRooms())
     {
         iterator->setVisitedBy('N');

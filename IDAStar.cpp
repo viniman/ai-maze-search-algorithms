@@ -20,13 +20,19 @@ void IDAStar::IDAStarSearchAlgorithm(Maze &maze)
 
     Node *destination = maze.getDestination();
 
+    bool pai = false;
+
     //Verifica se existe elemento na lista e se o destino já foi visitado.
     while(!(destination->isVisited()))
     {
-
-        corrente->setVisited();
-        statistics.visitarNo();
-        statistics.pathSolution.push_back(corrente->getId());
+        if(!pai)
+        {
+            corrente->setVisited();
+            statistics.visitarNo();
+            statistics.pathSolution.push_back(corrente->getId());
+        }
+        else
+            pai = false;
 
         //Verifica cada direção de corrente
 
@@ -73,12 +79,19 @@ void IDAStar::IDAStarSearchAlgorithm(Maze &maze)
                     oldPatamar = HUGE_VALF;
 
                     cleanMazeForSearch(maze);
+                    statistics.pathSolution.erase(statistics.pathSolution.begin(), statistics.pathSolution.end());
+
 
                 }
 
             }
             else
+            {
                 corrente = corrente->getFather();
+                pai = true;
+
+            }
+
 
         }
 
