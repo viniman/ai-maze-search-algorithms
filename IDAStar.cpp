@@ -26,6 +26,7 @@ void IDAStar::IDAStarSearchAlgorithm(Maze &maze)
 
         corrente->setVisited();
         statistics.visitarNo();
+        statistics.pathSolution.push_back(corrente->getId());
 
         //Verifica cada direção de corrente
 
@@ -87,8 +88,11 @@ void IDAStar::IDAStarSearchAlgorithm(Maze &maze)
 
     statistics.executionTimeMeasure();
     statistics.setSucced(maze.getDestination()->isVisited());
-    if(maze.getDestination()->isVisited())
-        statistics.setProfundidadeSolucao((maze.getDestination())->getdistanceOrigin());
+    statistics.setProfundidadeSolucao((maze.getDestination())->getdistanceOrigin());
+
+    int custo = statistics.pathSolution.size();
+    statistics.setCustoSolucao(custo);
+
     statistics.printStatistics();
 }
 

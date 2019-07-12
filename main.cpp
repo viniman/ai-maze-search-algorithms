@@ -38,14 +38,14 @@ int main(int argc, char** argv)
     Maze *mazeGenerated = Utils::mazeGeneratorRecursiveBacktracker(10, 10, false);
 
 
-    /*Backtracking::backtrackingSearchAlgorithm(*mazeGenerated);
+    Backtracking::backtrackingSearchAlgorithm(*mazeGenerated);
     Backtracking::backtrackingSearchAlgorithmPAI(*mazeGenerated);
-    Breadth::breadthSearchAlgorithm(*mazeGenerated);*/
+    Breadth::breadthSearchAlgorithm(*mazeGenerated);
     Depth::DepthSearchAlgorithm(*mazeGenerated);
-    /*Ordered::orderedSearchAlgorithm(*mazeGenerated);
+    Ordered::orderedSearchAlgorithm(*mazeGenerated);
     Greedy::greedySearchAlgorithm(*mazeGenerated);
     AStar::ASearchAlgorithm(*mazeGenerated);
-    IDAStar::IDAStarSearchAlgorithm(*mazeGenerated);*/
+    IDAStar::IDAStarSearchAlgorithm(*mazeGenerated);
 
     return 0;
 }
