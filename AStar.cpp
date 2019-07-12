@@ -11,7 +11,7 @@ void AStar::ASearchAlgorithm(Maze& maze)
 {
     cleanMazeForSearch(maze);
     Statistics statistics(maze.getNumRooms());
-    statistics.setAlgorithmName("ASearchAlgorithm");
+    statistics.setAlgorithmName("A*");
 
     cleanMazeForSearch(maze);
 
