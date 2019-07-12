@@ -119,6 +119,8 @@ void AStar::insereNode(list<Node *> *listNode, Node *corrente, Node *direcao, St
 
         listNode->push_back(direcao); //Insere direcao na lista
 
+        direcao->setProfundidade(corrente->getProfundidade() + 1);
+
         statistics.expandirNo();
         statistics.setProfundidade(corrente->getProfundidade() + 1);
 
@@ -134,6 +136,7 @@ void AStar::insereNode(list<Node *> *listNode, Node *corrente, Node *direcao, St
             //Atualiza dados
             direcao->setdistanceOrigin(distanceOrigin);
             direcao->setsumHeurDist(distanceOrigin + direcao->getHeuristicValue());
+            direcao->setProfundidade(corrente->getProfundidade() + 1);
             statistics.setProfundidade(corrente->getProfundidade() + 1);
 
         }
