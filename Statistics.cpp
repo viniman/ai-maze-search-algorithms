@@ -75,7 +75,7 @@ void Statistics::printStatistics()
 {
     cout << endl << "--------------------------------------------------------------------" << endl;
     cout << "Nome do Algoritmo: " << algorithmName << endl;
-    cout << "Tempo de execução: " << fixed << executionTime << " MS "<<endl;
+    cout << "Tempo de execução: " << fixed << executionTime << endl;
     cout << "Estado da solução: " << (succed ? "Sucesso" : "Fracasso") << endl;
     cout << "Custo da solução: " << custoSolucao<<endl;
     cout << "Numero de nós do labirinto: " << numNodes << endl;

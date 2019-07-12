@@ -35,7 +35,7 @@ int main(int argc, char** argv)
 */
 
     cout << endl << "Uso no labirinto gerado:" << endl;
-    Maze *mazeGenerated = Utils::mazeGeneratorRecursiveBacktracker(10, 10, false);
+    Maze *mazeGenerated = Utils::mazeGeneratorRecursiveBacktracker(200, 200, false);
 
 
     Backtracking::backtrackingSearchAlgorithm(*mazeGenerated);
