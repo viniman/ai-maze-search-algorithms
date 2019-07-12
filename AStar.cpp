@@ -3,15 +3,25 @@
 //
 
 #include "AStar.h"
+#include "Statistics.h"
+
 using namespace std;
 
 void AStar::ASearchAlgorithm(Maze& maze)
 {
     cleanMazeForSearch(maze);
+    Statistics statistics(maze.getNumRooms());
+    statistics.setAlgorithmName("ASearchAlgorithm");
+
+    cleanMazeForSearch(maze);
+
+    statistics.startTiming();
 
     list<Node*> listNode;
 
     Node *corrente = maze.getOrigin();
+    corrente->setProfundidade(0);
+
     Node const * const destination = maze.getDestination();
 
     //Atualiza origem
@@ -30,18 +40,26 @@ void AStar::ASearchAlgorithm(Maze& maze)
         corrente = *aux;
 
         corrente->setVisited();
+        statistics.visitarNo();
+        statistics.pathSolution.push_back(corrente->getId());
 
-        insereNode(&listNode, corrente, corrente->getTop());
-        insereNode(&listNode, corrente, corrente->getLeft());
-        insereNode(&listNode, corrente, corrente->getBotton());
-        insereNode(&listNode, corrente, corrente->getRight());
+        insereNode(&listNode, corrente, corrente->getTop(), statistics);
+        insereNode(&listNode, corrente, corrente->getLeft(), statistics);
+        insereNode(&listNode, corrente, corrente->getBotton(), statistics);
+        insereNode(&listNode, corrente, corrente->getRight(), statistics);
 
     }
 
-    if((maze.getDestination())->isVisited())
-        cout<<"SUCESSO ASTAR\n";
-    else
-        std::cout<<"FRACASSO ASTAR\n";
+    statistics.executionTimeMeasure();
+
+    statistics.setSucced((maze.getDestination())->isVisited());
+
+    statistics.setProfundidadeSolucao((maze.getDestination())->getProfundidade());
+
+    int custo = statistics.pathSolution.size();
+    statistics.setCustoSolucao(custo);
+
+    statistics.printStatistics();
 
     delete aux2;
 
@@ -81,7 +99,7 @@ bool AStar::removeBest(list<Node*> *listNode, Node **corrente)
 
 }
 
-void AStar::insereNode(list<Node*> *listNode, Node *corrente, Node *direcao)
+void AStar::insereNode(list<Node *> *listNode, Node *corrente, Node *direcao, Statistics &statistics)
 {
     if(direcao == NULL)
         return;
@@ -101,6 +119,9 @@ void AStar::insereNode(list<Node*> *listNode, Node *corrente, Node *direcao)
 
         listNode->push_back(direcao); //Insere direcao na lista
 
+        statistics.expandirNo();
+        statistics.setProfundidade(corrente->getProfundidade() + 1);
+
     }
     else
     {
@@ -113,6 +134,7 @@ void AStar::insereNode(list<Node*> *listNode, Node *corrente, Node *direcao)
             //Atualiza dados
             direcao->setdistanceOrigin(distanceOrigin);
             direcao->setsumHeurDist(distanceOrigin + direcao->getHeuristicValue());
+            statistics.setProfundidade(corrente->getProfundidade() + 1);
 
         }
 

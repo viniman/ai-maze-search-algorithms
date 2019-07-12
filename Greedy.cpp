@@ -7,11 +7,16 @@
 void Greedy::greedySearchAlgorithm(Maze& maze)
 {
 
-
     cleanMazeForSearch(maze);
     list<Node*> listNode;
 
+    Statistics statistics(maze.getNumRooms());
+    statistics.startTiming();
+
+    statistics.setAlgorithmName("greedySearchAlgorithm");
+
     Node *corrente = maze.getOrigin();
+    corrente->setProfundidade(0);
     Node const * const destination = maze.getDestination();
 
     Node *aux2 = new Node(0,0);
@@ -25,18 +30,28 @@ void Greedy::greedySearchAlgorithm(Maze& maze)
     {
         corrente = *aux;
         corrente->setVisited();
+        statistics.visitarNo();
 
-        insereNode(&listNode, corrente, corrente->getTop());
-        insereNode(&listNode, corrente, corrente->getLeft());
-        insereNode(&listNode, corrente, corrente->getBotton());
-        insereNode(&listNode, corrente, corrente->getRight());
+        (statistics.pathSolution).push_back(corrente->getId());
+
+        insereNode(&listNode, corrente, corrente->getTop(), statistics);
+        insereNode(&listNode, corrente, corrente->getLeft(), statistics);
+        insereNode(&listNode, corrente, corrente->getBotton(), statistics);
+        insereNode(&listNode, corrente, corrente->getRight(), statistics);
 
     }
 
-    if((maze.getDestination())->isVisited())
-        cout<<"SUCESSO GREEDY\n";
-    else
-        std::cout<<"FRACASSO GREEDY\n";
+    statistics.executionTimeMeasure();
+    statistics.setProfundidadeSolucao((maze.getDestination())->getProfundidade());
+
+
+    statistics.setSucced(destination->isVisited());
+
+    int custo = (statistics.pathSolution).size();
+
+    statistics.setCustoSolucao(custo);
+
+    statistics.printStatistics();
 
     delete aux2;
 
@@ -79,7 +94,7 @@ bool Greedy::removeBest(list<Node*> *listNode, Node **corrente)
 
 }
 
-void Greedy::insereNode(list<Node*> *listNode, Node *corrente, Node *direcao)
+void Greedy::insereNode(list<Node *> *listNode, Node *corrente, Node *direcao, Statistics &statistics)
 {
     if(direcao == NULL)
         return;
@@ -92,9 +107,11 @@ void Greedy::insereNode(list<Node*> *listNode, Node *corrente, Node *direcao)
     if(!direcao->getAdicionadoNodeLista())
     {
 
-
+        statistics.expandirNo();
         listNode->push_back(direcao); //Insere direcao na lista
         direcao->adicionarNodeLista();
+        direcao->setProfundidade(corrente->getProfundidade() + 1);
+        statistics.setProfundidade(corrente->getProfundidade() + 1);
 
     }
 

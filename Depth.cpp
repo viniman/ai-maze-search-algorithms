@@ -3,17 +3,27 @@
 //
 
 #include "Depth.h"
+#include "Statistics.h"
+
 
 void Depth::DepthSearchAlgorithm(Maze& maze)
 {
     cleanMazeForSearch(maze);
 
+    Statistics statistics(maze.getNumRooms());
+    statistics.setAlgorithmName("DepthSearchAlgorithm");
+    statistics.startTiming();
+
     stack<Node*> stackNode;             //Pilha de nós
     stackNode.push(maze.getOrigin());   //Coloca a origem no topo da pilha.
-    const Node *const dest = maze.getDestination();
+    statistics.expandirNo();
+
+    Node * dest = maze.getDestination();
 
     Node *corrente = NULL;
     Node *neighborhood = NULL;
+
+    (maze.getOrigin())->setProfundidade(0);
 
     // Continua enqunto a origem não for atingida e a pilha for não fazia.
     while((!dest->isVisited()) && (!stackNode.empty()))
@@ -21,6 +31,10 @@ void Depth::DepthSearchAlgorithm(Maze& maze)
 
         corrente = stackNode.top(); //Atualiza o nó corrente
         stackNode.pop();            //Remove o topo da pilha.
+
+        statistics.pathSolution.push_back(corrente->getId());
+
+        statistics.visitarNo();
 
         //Tenta o quarto a esquerda.
 
@@ -30,6 +44,9 @@ void Depth::DepthSearchAlgorithm(Maze& maze)
         {
             neighborhood->setFather(corrente);
             stackNode.push(neighborhood);
+            neighborhood->setProfundidade(corrente->getProfundidade() + 1);
+            statistics.setProfundidade(neighborhood->getProfundidade());
+            statistics.expandirNo();
         }
 
         //Tenta o quarto em baixo.
@@ -40,6 +57,9 @@ void Depth::DepthSearchAlgorithm(Maze& maze)
         {
             neighborhood->setFather(corrente);
             stackNode.push(neighborhood);
+            statistics.expandirNo();
+            neighborhood->setProfundidade(corrente->getProfundidade() + 1);
+            statistics.setProfundidade(neighborhood->getProfundidade());
         }
 
         //Tenta o quarto a direita.
@@ -50,6 +70,9 @@ void Depth::DepthSearchAlgorithm(Maze& maze)
         {
             neighborhood->setFather(corrente);
             stackNode.push(neighborhood);
+            statistics.expandirNo();
+            neighborhood->setProfundidade(corrente->getProfundidade() + 1);
+            statistics.setProfundidade(neighborhood->getProfundidade());
         }
 
         //Tenta o quarto de cima.
@@ -60,6 +83,9 @@ void Depth::DepthSearchAlgorithm(Maze& maze)
         {
             neighborhood->setFather(corrente);
             stackNode.push(neighborhood);
+            statistics.expandirNo();
+            neighborhood->setProfundidade(corrente->getProfundidade() + 1);
+            statistics.setProfundidade(neighborhood->getProfundidade());
         }
 
         //Visitamos o Nó.
@@ -68,13 +94,13 @@ void Depth::DepthSearchAlgorithm(Maze& maze)
 
     }
 
-    if(dest->isVisited())
-        cout<<"SUCESSO DepthSearch\n";
+    statistics.executionTimeMeasure();
+    statistics.setSucced(dest->isVisited());
+    statistics.setProfundidadeSolucao(dest->getProfundidade());
+    int custo = statistics.pathSolution.size();
+    statistics.setCustoSolucao(custo);
 
-    else
-        cout<<"FRACASSO DepthSearch\n";
-
-
+    statistics.printStatistics();
 
 
 }

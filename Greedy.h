@@ -11,6 +11,8 @@
 #include "math.h"
 #include <iostream>
 #include <list>
+#include "Statistics.h"
+
 using namespace std;
 
 class Greedy : public SearchAlgorithm
@@ -21,7 +23,7 @@ public:
 
 private:
     static bool removeBest(list<Node*> *listNode, Node **corrente);
-    static void insereNode(list<Node*> *listNode, Node *corrente, Node *direcao);
+    static void insereNode(list<Node *> *listNode, Node *corrente, Node *direcao, Statistics &statistics);
 };
 
 

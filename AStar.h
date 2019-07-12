@@ -8,6 +8,7 @@
 #include <iostream>
 #include "SearchAlgorithm.h"
 #include "Maze.h"
+#include "Statistics.h"
 #include<list>
 
 using namespace std;
@@ -18,7 +19,7 @@ class AStar : public SearchAlgorithm
 public:
     static void ASearchAlgorithm(Maze& maze);
     static bool removeBest(list<Node*> *listNode, Node **corrente);
-    static void insereNode(list<Node*> *listNode, Node *corrente, Node *direcao);
+    static void insereNode(list<Node *> *listNode, Node *corrente, Node *direcao, Statistics &statistics);
 
 
 };

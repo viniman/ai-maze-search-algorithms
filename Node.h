@@ -24,6 +24,7 @@ private:
     Node* top = nullptr;
     Node* father = nullptr;
     bool adicionadoLista = false;
+    int profundidade =  0;
 public:
     explicit Node(int id);
     Node(int id, unsigned int heuristicValue);
@@ -60,6 +61,8 @@ public:
     void adicionarNodeLista(){adicionadoLista = true;}
     void removerNodeLista(){adicionadoLista = false;}
     bool getAdicionadoNodeLista(){return adicionadoLista;}
+    void setProfundidade(int profundidade){this->profundidade = profundidade;}
+    int getProfundidade(){ return profundidade;}
 
 
 };

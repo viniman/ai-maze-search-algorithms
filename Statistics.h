@@ -21,7 +21,6 @@ private:
     clock_t timeInit;
     double executionTime;
     //int* pathSolution;
-    std::list<unsigned int> pathSolution;
     unsigned int averageRamificationTreeSearch;
     unsigned int nosExpandidos = 0;
     unsigned int nosVisitados = 0;
@@ -36,6 +35,9 @@ private:
 
 
 public:
+
+    std::list<unsigned int> pathSolution;
+
     Statistics(unsigned int numNodes);
 
     void startTiming();
@@ -49,6 +51,7 @@ public:
     void setProfundidadeSolucao(unsigned int profundidadeSolucao);
     unsigned int getProfundidadeSolucao();
     unsigned int getCustoSolucao();
+    void setCustoSolucao(int custo){custoSolucao = custo;}
     void printStatistics();
     void setNodeSolution(unsigned int id);
     void setAlgorithmName(const std::string &algorithmName);

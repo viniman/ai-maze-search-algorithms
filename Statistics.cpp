@@ -75,13 +75,14 @@ void Statistics::printStatistics()
 {
     cout << endl << "--------------------------------------------------------------------" << endl;
     cout << "Nome do Algoritmo: " << algorithmName << endl;
-    cout << "Tempo de execução: " << fixed << executionTime << endl;
+    cout << "Tempo de execução: " << fixed << executionTime << " MS "<<endl;
     cout << "Estado da solução: " << (succed ? "Sucesso" : "Fracasso") << endl;
-    cout << "Custo da solução: " << endl;
+    cout << "Custo da solução: " << custoSolucao<<endl;
     cout << "Numero de nós do labirinto: " << numNodes << endl;
-    cout << "Nós visitados: " << endl;
-    cout << "Nós expandidos: " << endl;
-    cout << "Profundidade Solucao: " << endl;
+    cout << "Nós visitados: " << nosVisitados<<endl;
+    cout << "Nós expandidos: " << nosExpandidos<<endl;
+    cout<<"Profundidade: "<<profundidade<<endl;
+    cout << "Profundidade Solucao: " << profundidadeSolucao<<endl;
     cout << "Fator de ramificação médio: " << endl;
     cout << "Caminho da Solução: ";
     for(const auto& it : pathSolution)
