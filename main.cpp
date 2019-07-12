@@ -11,27 +11,54 @@
 #include "AStar.h"
 #include "IDAStar.h"
 #include "Statistics.h"
+#include "Ordered.h"
+#include "Breadth.h"
+
 using namespace std;
-
-
-
 
 int main(int argc, char** argv)
 {
-    string instanceFileName = "/home/igor/Documentos/ai-maze-search-algorithms/instances/instance10_10_4.in";
+    srand (time(NULL));
+    //Utils::newGeneratorRandomized(5, 5, 15);
+    //return 0;
+
+/*
+    string instanceFileName = "../instances/instance_30_30_0_899.in";//"../instances/instance10_10_2.in";
     Maze maze(instanceFileName);
-    Statistics statistics;
-
-    //Backtracking::backtrackingSearchAlgorithm(maze);
-    //Depth::DepthSearchAlgorithm(maze);
-
-    //Greedy::greedySearchAlgorithm(maze);
-
+    Backtracking::backtrackingSearchAlgorithm(maze);
+    Breadth::breadthSearchAlgorithm(maze);
+    Depth::DepthSearchAlgorithm(maze);
+    Ordered::orderedSearchAlgorithm(maze);
+    Greedy::greedySearchAlgorithm(maze);
     AStar::ASearchAlgorithm(maze);
-
-
-
     IDAStar::IDAStarSearchAlgorithm(maze, statistics);
+*/
+
+    cout << endl << "Uso no labirinto gerado:" << endl;
+    Maze *mazeGenerated = Utils::mazeGeneratorRecursiveBacktracker(10, 10, false);
+
+
+    Backtracking::backtrackingSearchAlgorithm(*mazeGenerated);
+    Backtracking::backtrackingSearchAlgorithmPAI(*mazeGenerated);
+    Breadth::breadthSearchAlgorithm(*mazeGenerated);
+    Depth::DepthSearchAlgorithm(*mazeGenerated);
+    Ordered::orderedSearchAlgorithm(*mazeGenerated);
+    Greedy::greedySearchAlgorithm(*mazeGenerated);
+    AStar::ASearchAlgorithm(*mazeGenerated);
+    IDAStar::IDAStarSearchAlgorithm(*mazeGenerated);
 
     return 0;
 }
+
+
+/*
+void print(Maze& maze)
+{
+    for (int i = 0; i < maze.getMazeLines(); ++i)
+    {
+        for (int j = 0; j < maze.getMazeColumns(); ++j)
+        {
+            cout << maze.getRoom(i*maze.getMazeColumns()+j) <<
+        }
+    }
+}*/

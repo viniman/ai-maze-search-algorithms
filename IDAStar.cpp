@@ -4,10 +4,13 @@
 
 #include "IDAStar.h"
 
-void IDAStar::IDAStarSearchAlgorithm(Maze &maze, Statistics &statistics)
+void IDAStar::IDAStarSearchAlgorithm(Maze &maze)
 {
-
     cleanMazeForSearch(maze);
+
+    Statistics statistics(maze.getNumRooms());
+    statistics.setAlgorithmName("IDA*");
+    statistics.startTiming();
 
     float oldPatamar = HUGE_VALF;
     float patamar = (maze.getOrigin())->getHeuristicValue();
@@ -81,13 +84,12 @@ void IDAStar::IDAStarSearchAlgorithm(Maze &maze, Statistics &statistics)
 
     }
 
-    if((maze.getDestination())->isVisited())
-    {
-        cout << "SUCESSO IDASTAR\n";
+
+    statistics.executionTimeMeasure();
+    statistics.setSucced(maze.getDestination()->isVisited());
+    if(maze.getDestination()->isVisited())
         statistics.setProfundidadeSolucao((maze.getDestination())->getdistanceOrigin());
-    }
-    else
-        std::cout<<"FRACASSO IDASTAR\n";
+    statistics.printStatistics();
 }
 
 bool IDAStar::verificaPatamar(Node *corrente, Node *direcao, const float patamar, float *oldpatamar, Statistics &statistics)

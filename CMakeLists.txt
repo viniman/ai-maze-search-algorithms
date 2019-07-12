@@ -30,4 +30,5 @@ add_executable(ai_maze_search_algorithms
         SearchAlgorithm.h
         SearchAlgorithm.cpp
         Statistics.h
-        Statistics.cpp)
+        Statistics.cpp
+        OrderedEdgeStruct.h)

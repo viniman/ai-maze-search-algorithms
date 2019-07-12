@@ -8,10 +8,15 @@
 #include <algorithm>
 #include "Ordered.h"
 #include "OrderedEdgeStruct.h"
+#include "Statistics.h"
 
 void Ordered::orderedSearchAlgorithm(Maze &maze)
 {
     cleanMazeForSearch(maze);
+
+    Statistics statistics(maze.getNumRooms());
+    statistics.setAlgorithmName("Busca Ordenada");
+    statistics.startTiming();
 
     //queue<Node*> openedNodeList;
     queue<Node*> closedNodeList;
@@ -31,10 +36,14 @@ void Ordered::orderedSearchAlgorithm(Maze &maze)
             failure = true;
         else
         {
-            searchPointer = orderedOpenEdgeList.back().room2;
-            orderedOpenEdgeList.pop_back();
+            searchPointer = orderedOpenEdgeList.front().room2;
+            double curretNodeWeight= orderedOpenEdgeList.front().weight;
+            orderedOpenEdgeList.pop_front();
             if(searchPointer->getId() == maze.getDestination()->getId())
+            {
                 success = true;
+                /// Pegar a solução aqui
+            }
             else
             {
                 // fazer metodo que retorna proximo room nao nulo
@@ -49,7 +58,7 @@ void Ordered::orderedSearchAlgorithm(Maze &maze)
                         neighbor->setVisitedBy(nextOp);
                         neighbor->setVisited();
                         int weight = maze.weightMatrix[searchPointer->getX()][neighbor->getY()];
-                        orderedOpenEdgeList.emplace_back(searchPointer, neighbor, weight);
+                        orderedOpenEdgeList.emplace_back(searchPointer, neighbor, weight+curretNodeWeight);
                     }
                     searchPointer->setDirectionVisited(nextOp);
                 }
@@ -60,8 +69,7 @@ void Ordered::orderedSearchAlgorithm(Maze &maze)
         }
     }
 
-    if(success && !failure)
-        std::cout << "SUCESSO Ordered" << std::endl;
-    else
-        std::cout << "FRACASSO Ordered" << std::endl;
+    statistics.executionTimeMeasure();
+    statistics.setSucced(success && !failure);
+    statistics.printStatistics();
 }

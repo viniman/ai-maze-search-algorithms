@@ -4,17 +4,23 @@
 
 #include <iostream>
 #include "Backtracking.h"
+#include "Statistics.h"
+
+//operations.push_back('R');
+//operations.push_back('L');
+//operations.push_back('T');
+//operations.push_back('B');
+
 
 vector<char> SearchAlgorithm::operations;
 
-void Backtracking::backtrackingSearchAlgorithm(Maze& maze)
+void Backtracking::backtrackingSearchAlgorithm(Maze &maze)
 {
     cleanMazeForSearch(maze);
 
-    operations.push_back('R');
-    operations.push_back('L');
-    operations.push_back('T');
-    operations.push_back('B');
+    Statistics statistics(maze.getNumRooms());
+    statistics.setAlgorithmName("Backtracking");
+    statistics.startTiming();
 
     bool failure, success;
     failure = success = false;
@@ -45,18 +51,20 @@ void Backtracking::backtrackingSearchAlgorithm(Maze& maze)
             }
         }
     }
-    if(failure)
-        cout << "FALHA Backtracking" << endl;
-    if(success)
-        cout << "SUCESSO Backtracking" << endl;
+
+    statistics.executionTimeMeasure();
+    statistics.setSucced(success && !failure);
+    statistics.printStatistics();
+
 }
 
 void Backtracking::backtrackingSearchAlgorithmPAI(Maze& maze)
 {
-    operations.push_back('R');
-    operations.push_back('L');
-    operations.push_back('T');
-    operations.push_back('B');
+    cleanMazeForSearch(maze);
+
+    Statistics statistics(maze.getNumRooms());
+    statistics.setAlgorithmName("Backtracking com Pai");
+    statistics.startTiming();
 
     bool failure, success;
     failure = success = false;
@@ -89,8 +97,14 @@ void Backtracking::backtrackingSearchAlgorithmPAI(Maze& maze)
             }
         }
     }
-    if(failure)
-        cout << "FALHA" << endl;
+
+    statistics.executionTimeMeasure();
+    statistics.setSucced(success && !failure);
     if(success)
-        cout << "SUCESSO" << endl;
+        while (searchPointer)
+        {
+            statistics.setNodeSolution(searchPointer->getId());
+            searchPointer = searchPointer->getFather();
+        }
+    statistics.printStatistics();
 }

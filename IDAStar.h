@@ -17,7 +17,7 @@ class IDAStar : public SearchAlgorithm
 {
 
 public:
-    static void IDAStarSearchAlgorithm(Maze &maze, Statistics &statistics);
+    static void IDAStarSearchAlgorithm(Maze &maze);
 
 private:
     static bool

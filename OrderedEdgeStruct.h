@@ -14,6 +14,9 @@ class OrderedEdgeStruct{
 public:
     Node* room1;
     Node* room2;
+    double weight;
+    struct Edge { int room1; int room2; double weight; };
+    list<Edge> EdgeList;
 
     bool operator<(const OrderedEdgeStruct &rhs) const
     {
@@ -35,6 +38,6 @@ public:
         return !(*this < rhs);
     }
 
-    double weight;
+
     OrderedEdgeStruct(Node * room1, Node * room2, double weight) : room1(room1), room2(room2), weight(weight) {};
 };
