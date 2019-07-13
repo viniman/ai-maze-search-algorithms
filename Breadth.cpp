@@ -5,12 +5,16 @@
 #include <queue>
 #include <iostream>
 #include "Breadth.h"
+#include "Statistics.h"
 
 using namespace std;
 
 void Breadth::breadthSearchAlgorithm(Maze &maze)
 {
     cleanMazeForSearch(maze);
+    Statistics statistics(maze.getNumRooms());
+    statistics.setAlgorithmName("BreadthSearchAlgorithm");
+    statistics.startTiming();
 
     queue<Node*> openedNodeList;
     queue<Node*> closedNodeList;
@@ -21,6 +25,7 @@ void Breadth::breadthSearchAlgorithm(Maze &maze)
     Node* neighbor;
 
     openedNodeList.push(searchPointer);
+    searchPointer->setProfundidade(0);
 
     while (!(success || failure))
     {
@@ -29,6 +34,14 @@ void Breadth::breadthSearchAlgorithm(Maze &maze)
         else
         {
             searchPointer = openedNodeList.front();
+            searchPointer->setVisited();
+            statistics.visitarNo();
+
+            statistics.pathSolution.push_back(searchPointer->getId());
+
+            if(searchPointer->getFather())
+                (searchPointer->getFather())->setSucessores();
+
             openedNodeList.pop();
             if(searchPointer->getId() == maze.getDestination()->getId())
                 success = true;
@@ -44,7 +57,11 @@ void Breadth::breadthSearchAlgorithm(Maze &maze)
                     if(neighbor && !neighbor->isVisited())
                     {
                         neighbor->setVisitedBy(nextOp);
-                        neighbor->setVisited();
+                        neighbor->setProfundidade(searchPointer->getProfundidade() + 1);
+                        neighbor->setFather(searchPointer);
+                        statistics.expandirNo();
+                        statistics.setProfundidade(neighbor->getProfundidade());
+
                         openedNodeList.push(neighbor);
                     }
                     searchPointer->setDirectionVisited(nextOp);
@@ -55,8 +72,28 @@ void Breadth::breadthSearchAlgorithm(Maze &maze)
         }
     }
 
-    if(success && !failure)
-        std::cout << "SUCESSO LARGURA" << std::endl;
-    else
-        std::cout << "FRACASSO LARGURA" << std::endl;
+    statistics.executionTimeMeasure();
+    statistics.setSucced((maze.getDestination())->getProfundidade());
+    statistics.setProfundidadeSolucao((maze.getDestination())->getProfundidade());
+    int custo = statistics.pathSolution.size();
+    statistics.setCustoSolucao(custo);
+
+    const vector<Node*> &rooms = maze.getRooms();
+
+    int sucessores = 0;
+
+    for(auto it = rooms.begin(); it != rooms.end(); ++it)
+    {
+
+        if((*it)->isVisited())
+            sucessores += (*it)->getSucessores();
+
+
+    }
+
+    statistics.setMediaRamificacao(float(sucessores)/statistics.getNosVisitados());
+
+    statistics.printStatistics();
+
+
 }

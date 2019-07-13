@@ -51,7 +51,7 @@ void Backtracking::backtrackingSearchAlgorithm(Maze &maze)
             }
         }
     }
-
+    statistics.setMediaRamificacao(0.0);
     statistics.executionTimeMeasure();
     statistics.setSucced(success && !failure);
     statistics.printStatistics();
@@ -70,6 +70,7 @@ void Backtracking::backtrackingSearchAlgorithmPAI(Maze& maze)
     failure = success = false;
 
     Node* searchPointer = maze.getOrigin();
+    searchPointer->setProfundidade(0);
 
     while (!(failure || success))
     {
@@ -82,6 +83,16 @@ void Backtracking::backtrackingSearchAlgorithmPAI(Maze& maze)
             searchPointer = neighborhood;
             searchPointer->setVisitedBy(nextOp);
             searchPointer->setVisited();
+
+            neighborhood->setProfundidade(searchPointer->getProfundidade() + 1);
+            statistics.setProfundidade(neighborhood->getProfundidade());
+
+            statistics.visitarNo();
+            statistics.expandirNo();
+
+            if(searchPointer->getFather())
+                (searchPointer->getFather())->setSucessores();
+
             if(searchPointer->getId() == maze.getDestination()->getId())
                 success = true;
         }
@@ -106,5 +117,21 @@ void Backtracking::backtrackingSearchAlgorithmPAI(Maze& maze)
             statistics.setNodeSolution(searchPointer->getId());
             searchPointer = searchPointer->getFather();
         }
+
+    const vector<Node*> &rooms = maze.getRooms();
+
+    int sucessores = 0;
+
+    for(auto it = rooms.begin(); it != rooms.end(); ++it)
+    {
+
+        if((*it)->isVisited())
+            sucessores += (*it)->getSucessores();
+
+
+    }
+
+    statistics.setMediaRamificacao(float(sucessores)/statistics.getNosVisitados());
+
     statistics.printStatistics();
 }

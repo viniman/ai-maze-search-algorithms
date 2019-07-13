@@ -34,8 +34,12 @@ int main(int argc, char** argv)
     IDAStar::IDAStarSearchAlgorithm(maze, statistics);
 */
 
-    cout << endl << "Uso no labirinto gerado:" << endl;
-    Maze *mazeGenerated = Utils::mazeGeneratorRecursiveBacktracker(200, 200, false);
+    cout<<"Digite um valor para o tamanho da matriz quadrade: ";
+
+    int unidades;
+    cin>>unidades;
+
+    Maze *mazeGenerated = Utils::mazeGeneratorRecursiveBacktracker(unidades, unidades, false);
 
 
     Backtracking::backtrackingSearchAlgorithm(*mazeGenerated);

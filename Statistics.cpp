@@ -83,7 +83,7 @@ void Statistics::printStatistics()
     cout << "Nós expandidos: " << nosExpandidos<<endl;
     cout<<"Profundidade: "<<profundidade<<endl;
     cout << "Profundidade Solucao: " << profundidadeSolucao<<endl;
-    cout << "Fator de ramificação médio: " << endl;
+    cout << "Fator de ramificação médio: " <<averageRamificationTreeSearch<<endl;
     cout << "Caminho da Solução: ";
     for(const auto& it : pathSolution)
         cout << it << " ";

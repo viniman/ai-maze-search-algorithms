@@ -36,6 +36,9 @@ void Depth::DepthSearchAlgorithm(Maze& maze)
 
         statistics.visitarNo();
 
+        if(corrente->getFather())
+            (corrente->getFather())->setSucessores();
+
         //Tenta o quarto a esquerda.
 
         neighborhood = corrente->getLeft();
@@ -99,6 +102,21 @@ void Depth::DepthSearchAlgorithm(Maze& maze)
     statistics.setProfundidadeSolucao(dest->getProfundidade());
     int custo = statistics.pathSolution.size();
     statistics.setCustoSolucao(custo);
+
+    const vector<Node*> &rooms = maze.getRooms();
+
+    int sucessores = 0;
+
+    for(auto it = rooms.begin(); it != rooms.end(); ++it)
+    {
+
+        if((*it)->isVisited())
+            sucessores += (*it)->getSucessores();
+
+
+    }
+
+    statistics.setMediaRamificacao(float(sucessores)/statistics.getNosVisitados());
 
     statistics.printStatistics();
 

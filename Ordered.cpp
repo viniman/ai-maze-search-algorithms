@@ -30,6 +30,8 @@ void Ordered::orderedSearchAlgorithm(Maze &maze)
 
     orderedOpenEdgeList.emplace_back(searchPointer, searchPointer, 0);
 
+    searchPointer->setProfundidade(0);
+
     while (!(success || failure))
     {
         if(orderedOpenEdgeList.empty())
@@ -37,6 +39,13 @@ void Ordered::orderedSearchAlgorithm(Maze &maze)
         else
         {
             searchPointer = orderedOpenEdgeList.front().room2;
+            statistics.pathSolution.push_back(searchPointer->getId());
+            searchPointer->setVisited();
+            statistics.visitarNo();
+
+            if(searchPointer->getFather())
+                (searchPointer->getFather())->setSucessores();
+
             double curretNodeWeight= orderedOpenEdgeList.front().weight;
             orderedOpenEdgeList.pop_front();
             if(searchPointer->getId() == maze.getDestination()->getId())
@@ -56,7 +65,12 @@ void Ordered::orderedSearchAlgorithm(Maze &maze)
                     if(neighbor && !neighbor->isVisited())
                     {
                         neighbor->setVisitedBy(nextOp);
-                        neighbor->setVisited();
+                        statistics.expandirNo();
+                        neighbor->setFather(searchPointer);
+
+                        neighbor->setProfundidade(searchPointer->getProfundidade() + 1);
+                        statistics.setProfundidade(neighbor->getProfundidade());
+
                         int weight = maze.weightMatrix[searchPointer->getX()][neighbor->getY()];
                         orderedOpenEdgeList.emplace_back(searchPointer, neighbor, weight+curretNodeWeight);
                     }
@@ -71,5 +85,25 @@ void Ordered::orderedSearchAlgorithm(Maze &maze)
 
     statistics.executionTimeMeasure();
     statistics.setSucced(success && !failure);
+    statistics.setProfundidadeSolucao((maze.getDestination())->getProfundidade());
+
+    int custo = statistics.pathSolution.size();
+    statistics.setCustoSolucao(custo);
+
+    const vector<Node*> &rooms = maze.getRooms();
+
+    int sucessores = 0;
+
+    for(auto it = rooms.begin(); it != rooms.end(); ++it)
+    {
+
+        if((*it)->isVisited())
+            sucessores += (*it)->getSucessores();
+
+
+    }
+
+    statistics.setMediaRamificacao(float(sucessores)/statistics.getNosVisitados());
+
     statistics.printStatistics();
 }

@@ -39,6 +39,14 @@ void AStar::ASearchAlgorithm(Maze& maze)
     {
         corrente = *aux;
 
+        if(corrente->getFather() != NULL)
+        {
+
+            (corrente->getFather())->setSucessores();
+
+
+        }
+
         corrente->setVisited();
         statistics.visitarNo();
         statistics.pathSolution.push_back(corrente->getId());
@@ -50,6 +58,8 @@ void AStar::ASearchAlgorithm(Maze& maze)
 
     }
 
+
+
     statistics.executionTimeMeasure();
 
     statistics.setSucced((maze.getDestination())->isVisited());
@@ -58,6 +68,23 @@ void AStar::ASearchAlgorithm(Maze& maze)
 
     int custo = statistics.pathSolution.size();
     statistics.setCustoSolucao(custo);
+
+    const vector<Node*> &rooms = maze.getRooms();
+
+    int sucessores = 0;
+
+    for(auto it = rooms.begin(); it != rooms.end(); ++it)
+    {
+
+        if((*it)->isVisited())
+            sucessores += (*it)->getSucessores();
+
+
+    }
+
+    statistics.setMediaRamificacao(float(sucessores)/statistics.getNosVisitados());
+
+
 
     statistics.printStatistics();
 
@@ -116,6 +143,7 @@ void AStar::insereNode(list<Node *> *listNode, Node *corrente, Node *direcao, St
         //Atualiza dados.
         direcao->setdistanceOrigin(distanceOrigin);
         direcao->setsumHeurDist(distanceOrigin + direcao->getHeuristicValue());
+        direcao->setFather(corrente);
 
         listNode->push_back(direcao); //Insere direcao na lista
 
@@ -138,6 +166,7 @@ void AStar::insereNode(list<Node *> *listNode, Node *corrente, Node *direcao, St
             direcao->setsumHeurDist(distanceOrigin + direcao->getHeuristicValue());
             direcao->setProfundidade(corrente->getProfundidade() + 1);
             statistics.setProfundidade(corrente->getProfundidade() + 1);
+            direcao->setFather(corrente);
 
         }
 

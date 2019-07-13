@@ -30,6 +30,9 @@ void IDAStar::IDAStarSearchAlgorithm(Maze &maze)
             corrente->setVisited();
             statistics.visitarNo();
             statistics.pathSolution.push_back(corrente->getId());
+
+            if(corrente->getFather())
+                (corrente->getFather())->setSucessores();
         }
         else
             pai = false;
@@ -105,6 +108,21 @@ void IDAStar::IDAStarSearchAlgorithm(Maze &maze)
 
     int custo = statistics.pathSolution.size();
     statistics.setCustoSolucao(custo);
+
+    const vector<Node*> &rooms = maze.getRooms();
+
+    int sucessores = 0;
+
+    for(auto it = rooms.begin(); it != rooms.end(); ++it)
+    {
+
+        if((*it)->isVisited())
+            sucessores += (*it)->getSucessores();
+
+
+    }
+
+    statistics.setMediaRamificacao(float(sucessores)/statistics.getNosVisitados());
 
     statistics.printStatistics();
 }

@@ -21,7 +21,7 @@ private:
     clock_t timeInit;
     double executionTime;
     //int* pathSolution;
-    unsigned int averageRamificationTreeSearch;
+    float averageRamificationTreeSearch;
     unsigned int nosExpandidos = 0;
     unsigned int nosVisitados = 0;
     unsigned int profundidade = 0;
@@ -35,7 +35,7 @@ private:
 
 
 public:
-
+    void setMediaRamificacao(float media){averageRamificationTreeSearch = media;}
     std::list<unsigned int> pathSolution;
 
     Statistics(unsigned int numNodes);

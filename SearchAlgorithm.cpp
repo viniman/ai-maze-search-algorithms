@@ -77,5 +77,6 @@ void SearchAlgorithm::cleanMazeForSearch(Maze& maze)
         iterator->setFather(NULL);
         iterator->removerNodeLista();
         iterator->setProfundidade(0);
+        iterator->zerarSucessores();
     }
 }
